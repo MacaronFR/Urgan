@@ -22,7 +22,7 @@
                   app:layout_constraintRight_toRightOf="parent"
                   android:layout_marginTop="@dimen/ext_margin"
                   android:text="@string/forgot"
-                  android:textAlignment="center"
+                  android:gravity="center"
                   android:textSize="@dimen/title_size"
                   android:id="@+id/title"
                   android:textStyle="bold"
@@ -35,7 +35,7 @@
                 app:layout_constraintRight_toRightOf="@id/title"
                 android:layout_marginTop="@dimen/in_margin"
                 android:text="@string/please_connect"
-                android:textAlignment="center"
+                android:gravity="center"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <EditText
@@ -47,7 +47,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.25"
             android:background="@drawable/input"
-            android:textAlignment="center"
+            android:gravity="center"
             android:id="@+id/email"
             android:inputType="textEmailAddress"
             android:autofillHints="emailAddress"

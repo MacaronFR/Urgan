@@ -5,10 +5,17 @@
     <string name="email">E-mail</string>
     <string name="password">Mot de passe</string>
     <string name="login">Se connecter</string>
-    <string name="signin">Créer un nouveau compte</string>
+    <string name="go_signin">Créer un nouveau compte</string>
     <string name="forgot">Mot de passe oublié</string>
     <string name="please_enter_mail">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
     <string name="resend_password">Renvoyer mon mot de passe</string>
+    <string name="signin">Inscription</string>
+    <string name="please_signin">"Veuillez saisir ces différentes informations, afin que vos listes soient sauvegardées
+        "
+    </string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="check_password">Vérification du mot de passe</string>
+    <string name="do_signin">S\'inscrire</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

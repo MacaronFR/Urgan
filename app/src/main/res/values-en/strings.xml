@@ -6,8 +6,13 @@
     <string name="email">email</string>
     <string name="password">Password</string>
     <string name="login">Log in</string>
-    <string name="signin">Sign in</string>
+    <string name="go_signin">Sign in</string>
     <string name="forgot">Forgot password</string>
     <string name="please_enter_mail">Please enter your mail to reset your password</string>
     <string name="resend_password">Resend password</string>
+    <string name="signin">Sign in</string>
+    <string name="please_signin">Please enter yout informations to save your lists</string>
+    <string name="username">Username</string>
+    <string name="check_password">Password check</string>
+    <string name="do_signin">Sign in</string>
 </resources>

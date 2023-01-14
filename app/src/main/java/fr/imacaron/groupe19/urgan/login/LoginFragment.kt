@@ -30,6 +30,10 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.signin.setOnClickListener {
+            findNavController().navigate(R.id.SigninFragment)
+        }
+
         binding.forgot.setOnClickListener {
             findNavController().navigate(R.id.ForgotFragment)
         }

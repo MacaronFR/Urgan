@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toBottomOf="@id/title"
                 android:layout_marginTop="@dimen/in_margin"
                 android:text="@string/please_enter_mail"
-                android:textAlignment="center"
+                android:gravity="center"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,10 +55,10 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginHorizontal="@dimen/ext_margin"
                 android:background="@drawable/input"
-                android:textAlignment="center"
                 android:id="@+id/email"
                 android:inputType="textEmailAddress"
                 android:autofillHints="emailAddress"
+                android:gravity="center"
         />
         <EditText
                 android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:layout_marginHorizontal="@dimen/ext_margin"
                 android:layout_marginTop="@dimen/in_margin"
                 android:background="@drawable/input"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:id="@+id/password"
                 android:inputType="textPassword"
                 android:autofillHints="emailAddress"
@@ -94,7 +94,7 @@
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
-                android:text="@string/signin"
+                android:text="@string/go_signin"
                 android:layout_marginHorizontal="@dimen/ext_margin"
                 android:layout_marginTop="@dimen/in_margin"
                 app:layout_constraintTop_toBottomOf="@id/login"
@@ -102,9 +102,14 @@
                 android:id="@+id/signin"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <fr.imacaron.groupe19.urgan.views.UnderLineTextView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/forgot"
-              android:text="@string/forgot" app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintStart_toStartOf="parent" android:textAlignment="center"
-              android:layout_marginBottom="@dimen/ext_margin"
+    <fr.imacaron.groupe19.urgan.views.UnderLineTextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/forgot"
+            android:text="@string/forgot"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="@dimen/ext_margin"
     />
 </androidx.constraintlayout.widget.ConstraintLayout>
