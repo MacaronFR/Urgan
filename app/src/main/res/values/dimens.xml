@@ -1,0 +1,10 @@
+<resources>
+    <dimen name="ext_margin">32dp</dimen>
+    <dimen name="in_margin">16dp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="title_size">32sp</dimen>
+    <dimen name="rounded">5dp</dimen>
+    <dimen name="input_height">48dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_borders">2dp</dimen>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Urgan</string>
+    <string name="welcome">Welcome !</string>
+    <string name="please_connect">Please connect or create a new account to use this app</string>
+    <string name="email">email</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+    <string name="signin">Sign in</string>
+    <string name="forgot">Forgot password</string>
+    <string name="please_enter_mail">Please enter your mail to reset your password</string>
+    <string name="resend_password">Resend password</string>
+</resources>
