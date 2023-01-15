@@ -7,4 +7,5 @@
     <dimen name="input_height">48dp</dimen>
     <dimen name="button_height">48dp</dimen>
     <dimen name="button_borders">2dp</dimen>
+    <dimen name="input_padding">16dp</dimen>
 </resources>

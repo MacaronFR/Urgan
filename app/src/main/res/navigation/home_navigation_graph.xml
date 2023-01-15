@@ -11,6 +11,18 @@
             android:label="Home"
             tools:layout="@layout/fragment_home"
     >
+        <action
+            android:id="@+id/action_HomeFragment_to_SearchFragment"
+            app:destination="@id/SearchFragment"
+        />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="fr.imacaron.groupe19.urgan.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search"
+    >
 
     </fragment>
 </navigation>
