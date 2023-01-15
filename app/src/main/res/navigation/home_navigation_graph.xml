@@ -23,6 +23,14 @@
                 android:id="@+id/action_HomeFragment_to_WishlistEmptyFragment"
                 app:destination="@id/WishlistEmptyFragment"
         />
+        <action
+                android:id="@+id/action_HomeFragment_to_LikesFragment"
+                app:destination="@id/LikesFragment"
+        />
+        <action
+                android:id="@+id/action_HomeFragment_to_LikesEmptyFragment"
+                app:destination="@id/LikesEmptyFragment"
+        />
     </fragment>
 
     <fragment
@@ -51,4 +59,24 @@
     >
 
     </fragment>
+
+    <fragment
+            android:id="@+id/LikesFragment"
+            android:name="fr.imacaron.groupe19.urgan.likes.LikesFragment"
+            android:label="Likes"
+            tools:layout="@layout/fragment_like"
+    >
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/LikesEmptyFragment"
+            android:name="fr.imacaron.groupe19.urgan.likes.LikesEmptyFragment"
+            android:label="LikesEmpty"
+            tools:layout="@layout/fragment_empty_like"
+    >
+
+    </fragment>
+
+
 </navigation>

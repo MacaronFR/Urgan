@@ -16,6 +16,7 @@ class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private var wishCount = 10
+    private var likesCount = 10
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -24,6 +25,11 @@ class HomeFragment: Fragment() {
             binding.wishCount.visibility = View.INVISIBLE
         }else{
             binding.wishCount.text = wishCount.toString()
+        }
+        if(likesCount == 0){
+            binding.likeCount.visibility = View.INVISIBLE
+        }else{
+            binding.likeCount.text = likesCount.toString()
         }
         return binding.root
     }
@@ -40,6 +46,14 @@ class HomeFragment: Fragment() {
                 findNavController().navigate(R.id.WishlistEmptyFragment)
             }else{
                 findNavController().navigate(R.id.WishlistFragment)
+            }
+        }
+
+        binding.like.setOnClickListener {
+            if(likesCount == 0){
+                findNavController().navigate(R.id.LikesEmptyFragment)
+            }else{
+                findNavController().navigate(R.id.LikesFragment)
             }
         }
     }
