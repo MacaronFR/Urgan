@@ -23,7 +23,7 @@
         <activity
                 android:name=".home.HomeActivity"
                 android:exported="true"
-                android:theme="@style/Theme.Urgan"
+                android:theme="@style/Theme.Urgan.NoActionBar"
         >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
