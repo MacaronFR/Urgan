@@ -15,6 +15,14 @@
             android:id="@+id/action_HomeFragment_to_SearchFragment"
             app:destination="@id/SearchFragment"
         />
+        <action
+            android:id="@+id/action_HomeFragment_to_WishlistFragment"
+            app:destination="@id/WishlistFragment"
+        />
+        <action
+                android:id="@+id/action_HomeFragment_to_WishlistEmptyFragment"
+                app:destination="@id/WishlistEmptyFragment"
+        />
     </fragment>
 
     <fragment
@@ -22,6 +30,24 @@
         android:name="fr.imacaron.groupe19.urgan.search.SearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search"
+    >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/WishlistFragment"
+        android:name="fr.imacaron.groupe19.urgan.wishlist.WishlistFragment"
+        android:label="Wishlist"
+        tools:layout="@layout/fragment_wishlist"
+    >
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/WishlistEmptyFragment"
+            android:name="fr.imacaron.groupe19.urgan.wishlist.WishlistEmptyFragment"
+            android:label="WishlistEmpty"
+            tools:layout="@layout/fragment_empty_wishlist"
     >
 
     </fragment>

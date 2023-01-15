@@ -39,6 +39,18 @@
                     android:id="@+id/wishlist"
                     android:layout_marginHorizontal="@dimen/in_margin"
             />
+            <TextView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/badge"
+                    app:layout_constraintBottom_toBottomOf="@id/wishlist"
+                    app:layout_constraintLeft_toLeftOf="@id/wishlist"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="27dp"
+                    android:id="@+id/wishCount"
+            />
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -51,6 +63,19 @@
                     android:id="@+id/like"
                     android:layout_marginHorizontal="@dimen/in_margin"
             />
+            <TextView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@drawable/badge"
+                app:layout_constraintBottom_toBottomOf="@id/like"
+                app:layout_constraintLeft_toLeftOf="@id/like"
+                android:text="8"
+                android:textSize="11sp"
+                android:gravity="center"
+                android:layout_marginLeft="12dp"
+                android:layout_marginBottom="27dp"
+                android:id="@+id/LIKEcOUNT"
+        />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
     <TextView
