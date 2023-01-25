@@ -1,7 +1,9 @@
 package fr.imacaron.groupe19.urgan.home
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.databinding.ActivityHomeBinding
 
@@ -14,6 +16,15 @@ class HomeActivity: AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
+    override fun onBackPressed() {
+        FirebaseAPIManager.auth.signOut()
+        if (FirebaseAPIManager.auth.currentUser == null) {
+            Toast.makeText(this, "Log Out Successful", Toast.LENGTH_LONG).show()
+            this.finish()
+        }
+    }
+
 }
 
 val games = listOf(

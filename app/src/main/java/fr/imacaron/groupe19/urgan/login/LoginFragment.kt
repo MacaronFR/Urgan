@@ -15,22 +15,17 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import fr.imacaron.groupe19.urgan.R
+import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentLoginBinding
 import fr.imacaron.groupe19.urgan.home.HomeActivity
 
 class LoginFragment: Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
-    private lateinit var auth: FirebaseAuth
-
     private var notificationId = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        auth = Firebase.auth
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -48,24 +43,26 @@ class LoginFragment: Fragment() {
 
         binding.login.setOnClickListener {
             loginUser(view)
-
-
         }
     }
 
     private fun loginUser(view: View) {
-        var email: String = view.findViewById<EditText>(R.id.email).text.toString()
-        var password: String = view.findViewById<EditText>(R.id.password).text.toString()
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
+        val email: String = view.findViewById<EditText>(R.id.email).text.toString()
+        val password: String = view.findViewById<EditText>(R.id.password).text.toString()
+
+        FirebaseAPIManager.auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this.requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this.requireContext(), "Login successful", Toast.LENGTH_LONG).show()
+                    // Sign in success, update UI with the signed-in user's information
+                    Toast.makeText(this.requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
                     notifyUser()
                     startActivity(Intent(this.requireContext(), HomeActivity::class.java))
                 } else {
-                    Toast.makeText(this.requireContext(), "Unable to login. Check your input or try again later", Toast.LENGTH_LONG).show()
+                    // If sign in fails, display a message to the user.
+                    Toast.makeText(this.requireContext(), "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
                 }
             }
+
     }
 
     private fun notifyUser() {

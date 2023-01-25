@@ -1,6 +1,6 @@
 package fr.imacaron.groupe19.urgan.home
 
-import android.graphics.drawable.Drawable
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import fr.imacaron.groupe19.urgan.R
+import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentHomeBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
