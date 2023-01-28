@@ -9,23 +9,28 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.data.Game
+import fr.imacaron.groupe19.urgan.databinding.FragmentDetailGameBinding
+import fr.imacaron.groupe19.urgan.databinding.GameRowItemBinding
 import kotlinx.coroutines.*
+import org.w3c.dom.Text
 import java.net.MalformedURLException
 import java.net.URL
 
-class GameAdapter(private val dataSet: List<Game>): RecyclerView.Adapter<GameAdapter.ViewHolder>() {
+class GameAdapter(private val dataSet: List<Game>, val onClick: View.OnClickListener): RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val title: TextView
         val editor: TextView
         val price: TextView
         val picture: ImageView
+        val more: TextView
 
         init {
             title = view.findViewById(R.id.title)
             editor = view.findViewById(R.id.editor)
             price = view.findViewById(R.id.price)
             picture = view.findViewById(R.id.logo)
+            more = view.findViewById(R.id.more)
         }
     }
 
@@ -40,6 +45,7 @@ class GameAdapter(private val dataSet: List<Game>): RecyclerView.Adapter<GameAda
             holder.title.text = title
             holder.editor.text = editor
             holder.price.text = "Prix : ${price}€"
+            holder.more.setOnClickListener(onClick)
             GlobalScope.launch(Dispatchers.IO){
                 try{
                     val url = URL(picture)

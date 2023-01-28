@@ -31,6 +31,10 @@
                 android:id="@+id/action_HomeFragment_to_LikesEmptyFragment"
                 app:destination="@id/LikesEmptyFragment"
         />
+        <action
+                android:id="@+id/action_HomeFragment_to_DetailFragment"
+                app:destination="@id/DetailFragment"
+        />
     </fragment>
 
     <fragment
@@ -39,7 +43,10 @@
         android:label="Search"
         tools:layout="@layout/fragment_search"
     >
-
+        <action
+                android:id="@+id/action_SearchFragment_to_DetailFragment"
+                app:destination="@id/DetailFragment"
+        />
     </fragment>
 
     <fragment
@@ -48,7 +55,10 @@
         android:label="Wishlist"
         tools:layout="@layout/fragment_wishlist"
     >
-
+        <action
+                android:id="@+id/action_WishlistFragment_to_DetailFragment"
+                app:destination="@id/DetailFragment"
+        />
     </fragment>
 
     <fragment
@@ -66,7 +76,10 @@
             android:label="Likes"
             tools:layout="@layout/fragment_like"
     >
-
+        <action
+                android:id="@+id/action_LikesFragment_to_DetailFragment"
+                app:destination="@id/DetailFragment"
+        />
     </fragment>
 
     <fragment
@@ -78,5 +91,12 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/DetailFragment"
+        android:name="fr.imacaron.groupe19.urgan.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_detail_game"
+    >
 
+    </fragment>
 </navigation>

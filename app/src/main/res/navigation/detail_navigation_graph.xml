@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/detail_navigation_graph"
+            app:startDestination="@id/DetailDescFragment"
+>
+    <fragment
+            android:id="@+id/DetailDescFragment"
+            android:name="fr.imacaron.groupe19.urgan.DetailDescFragment"
+            android:label="DetailDesc"
+            tools:layout="@layout/fragment_detail_desc"
+    />
+</navigation>
