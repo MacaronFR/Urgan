@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "762936259894",
+    "project_id": "urgan-a250d",
+    "storage_bucket": "urgan-a250d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762936259894:android:c15d144481f4c4f8b6ef97",
+        "android_client_info": {
+          "package_name": "fr.imacaron.groupe19.urgan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762936259894-ulju1p9eto98qgv7ofed6sa466f8l2uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyplUAbJ5Dh1iajLVI_gvU2A4q2Ov8M4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762936259894-ulju1p9eto98qgv7ofed6sa466f8l2uh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
