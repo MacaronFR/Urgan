@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.databinding.FragmentWishlistBinding
 import fr.imacaron.groupe19.urgan.home.games
@@ -21,7 +22,9 @@ class WishlistFragment: Fragment() {
         binding = FragmentWishlistBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         wishGames = games
-        binding.list.adapter = GameAdapter(listOf()) // TODO requete firebase
+        binding.list.adapter = GameAdapter(listOf()) {
+            findNavController().navigate(R.id.DetailFragment)
+        }
         return binding.root
     }
 

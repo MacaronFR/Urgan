@@ -54,5 +54,6 @@
             android:text="En savoir plus"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/more"
     />
 </androidx.constraintlayout.widget.ConstraintLayout>
