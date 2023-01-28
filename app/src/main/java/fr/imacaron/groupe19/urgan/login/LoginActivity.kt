@@ -3,10 +3,13 @@ package fr.imacaron.groupe19.urgan.login
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.ActivityLoginBinding
+import fr.imacaron.groupe19.urgan.home.HomeActivity
 
 class LoginActivity: AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -33,5 +36,15 @@ class LoginActivity: AppCompatActivity() {
 
         createNotificationChannel()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = FirebaseAPIManager.auth.currentUser
+        if(currentUser != null){
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
     }
 }
