@@ -21,7 +21,7 @@ class LikesFragment: Fragment() {
         binding = FragmentLikeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         likesGames = games
-        binding.list.adapter = GameAdapter(likesGames)
+        binding.list.adapter = GameAdapter(listOf()) // TODO requete firestore
         return binding.root
     }
 

@@ -21,7 +21,7 @@ class WishlistFragment: Fragment() {
         binding = FragmentWishlistBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         wishGames = games
-        binding.list.adapter = GameAdapter(wishGames)
+        binding.list.adapter = GameAdapter(listOf()) // TODO requete firebase
         return binding.root
     }
 

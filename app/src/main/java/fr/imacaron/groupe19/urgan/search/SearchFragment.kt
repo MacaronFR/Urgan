@@ -17,7 +17,7 @@ class SearchFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-        val adapter = GameAdapter(games)
+        val adapter = GameAdapter(listOf())
 
         binding.list.adapter = adapter
         return binding.root
