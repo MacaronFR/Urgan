@@ -10,7 +10,7 @@ data class MostPlayedGameResponse(
 ) {
     data class Response(
         @SerializedName("rollup_date" )
-        val rollup_date : Int,
+        val rollup_date : Long,
 
         @SerializedName("ranks" )
         val ranks : List<MostPlayedGame>

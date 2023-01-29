@@ -26,14 +26,14 @@ object SteamAPIManager {
 
     suspend fun getMostPlayedGames(): MostPlayedGameResponse = api.getMostPlayedGames().await()
 
-    suspend fun getGameDetails(id : Int): GameDetailsResponse {
+    suspend fun getGameDetails(id : Long): GameDetailsResponse {
         val response = store.getGameDetails(id).await()
         val game_details = response.asJsonObject.getAsJsonObject(id.toString())
         println(game_details.toString())
         return GsonBuilder().create().fromJson(game_details, GameDetailsResponse::class.java)
     }
 
-    suspend fun getReviewFromGame(id: Int): GameReviewResponse = store.getReviewFromGame(id).await()
+    suspend fun getGameReviews(id: Long): GameReviewResponse = store.getGameReviews(id).await()
 
 }
 

@@ -10,14 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.data.Game
-import fr.imacaron.groupe19.urgan.databinding.FragmentDetailGameBinding
-import fr.imacaron.groupe19.urgan.databinding.GameRowItemBinding
+import fr.imacaron.groupe19.urgan.data.Review
 import kotlinx.coroutines.*
-import org.w3c.dom.Text
 import java.net.MalformedURLException
 import java.net.URL
 
-class GameAdapter(private val dataSet: List<iNT>, val onClick: View.OnClickListener): RecyclerView.Adapter<GameAdapter.ViewHolder>() {
+class GameAdapter(private val dataSet: List<Long>, val onClick: View.OnClickListener): RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val title: TextView
@@ -43,11 +41,19 @@ class GameAdapter(private val dataSet: List<iNT>, val onClick: View.OnClickListe
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(dataSet[position]){
-            var game = Game("title", "editor", 0.0, "picture", "description", "banner", false, false, listOf(), 0)
+            var game: Game
             holder.more.setOnClickListener(onClick)
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
                     val game_details = SteamAPIManager.getGameDetails(this@with)
+                    val game_reviews_response = SteamAPIManager.getGameReviews(this@with)
+                    val game_reviews = game_reviews_response.reviews.map {
+                        Review(
+                            it.author?.steamid.toString(),
+                            it.votedUp ?: false,
+                            it.review ?: "No review"
+                        )
+                    } as ArrayList
                     game = Game(
                         game_details.data?.name ?: "",
                         game_details.data?.developers?.getOrNull(0) ?: "",
@@ -57,7 +63,7 @@ class GameAdapter(private val dataSet: List<iNT>, val onClick: View.OnClickListe
                         "",
                         false,
                         true,
-                        listOf(),
+                        game_reviews,
                         game_details.data?.steamAppid ?: 0
                     )
 

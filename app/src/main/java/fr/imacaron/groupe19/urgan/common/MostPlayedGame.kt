@@ -7,7 +7,7 @@ data class MostPlayedGame(
     val rank : Int,
 
     @SerializedName("appid")
-    val app_id : Int,
+    val app_id : Long,
 
     val last_week_rank : Int,
 

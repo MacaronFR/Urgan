@@ -18,8 +18,8 @@ class HomeActivity: AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        FirebaseAPIManager.auth.signOut()
-        if (FirebaseAPIManager.auth.currentUser == null) {
+        FirebaseAPIManager.signOut()
+        if (FirebaseAPIManager.getCurrentUser() == null) {
             Toast.makeText(this, "Log Out Successful", Toast.LENGTH_LONG).show()
             this.finish()
         }

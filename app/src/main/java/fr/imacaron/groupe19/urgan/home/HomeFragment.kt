@@ -1,17 +1,15 @@
 package fr.imacaron.groupe19.urgan.home
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import fr.imacaron.groupe19.urgan.R
+import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
-import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.databinding.FragmentHomeBinding
 import fr.imacaron.groupe19.urgan.list.GameAdapter
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +27,7 @@ class HomeFragment: Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-        val adapter = GameAdapter(listOf())
+        val adapter = GameAdapter(listOf()) { findNavController().navigate(R.id.DetailFragment) }
         binding.list.adapter = adapter
 
         if(wishCount == 0){
@@ -72,12 +70,14 @@ class HomeFragment: Fragment() {
             withContext(Dispatchers.IO) {
                 var games = SteamAPIManager.getMostPlayedGames()
                 var games_details_ids = games.response.ranks.map {
-                    println(it.app_id)
                     it.app_id
                 }
+
+                FirebaseAPIManager.getWishListIds()
+
                 withContext(Dispatchers.Main) {
                     binding.search.text = games.response.ranks[0].app_id.toString()
-                    val adapter = GameAdapter(games_details_ids)
+                    val adapter = GameAdapter(games_details_ids) { findNavController().navigate(R.id.DetailFragment) }
                     binding.list.adapter = adapter
                 }
 

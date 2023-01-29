@@ -12,6 +12,10 @@ import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentSigninBinding
 import fr.imacaron.groupe19.urgan.home.HomeActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SigninFragment: Fragment() {
     private lateinit var binding: FragmentSigninBinding
@@ -45,14 +49,22 @@ class SigninFragment: Fragment() {
             .addOnCompleteListener(this.requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(this.requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this.requireContext(),
+                        "Registration Successful",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val user = FirebaseAPIManager.auth.currentUser
                     startActivity(Intent(this.requireContext(), HomeActivity::class.java))
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(this.requireContext(), "An error occurred", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), "An error occurred", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
+
+        FirebaseAPIManager.signinUser(username, email, password)
+
 
     }
 }
