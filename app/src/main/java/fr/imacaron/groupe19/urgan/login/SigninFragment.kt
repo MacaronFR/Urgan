@@ -54,7 +54,6 @@ class SigninFragment: Fragment() {
                         "Registration Successful",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val user = FirebaseAPIManager.auth.currentUser
                     startActivity(Intent(this.requireContext(), HomeActivity::class.java))
                 } else {
                     // If sign in fails, display a message to the user.
@@ -64,6 +63,7 @@ class SigninFragment: Fragment() {
             }
 
         FirebaseAPIManager.signinUser(username, email, password)
+
 
 
     }

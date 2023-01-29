@@ -62,7 +62,6 @@ class LoginFragment: Fragment() {
                     Toast.makeText(this.requireContext(), "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
                 }
             }
-
     }
 
     private fun notifyUser() {
