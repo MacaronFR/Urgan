@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
@@ -22,7 +23,6 @@ class SigninFragment: Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Initialize Firebase Auth
         binding = FragmentSigninBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,26 +45,24 @@ class SigninFragment: Fragment() {
             view.findViewById<EditText>(R.id.check_password).setText("")
         }
 
-        FirebaseAPIManager.auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this.requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(
-                        this.requireContext(),
-                        "Registration Successful",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    startActivity(Intent(this.requireContext(), HomeActivity::class.java))
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(this.requireContext(), "An error occurred", Toast.LENGTH_SHORT)
-                        .show()
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+
+                val isConnected = FirebaseAPIManager.signinUser(username, email, password)
+
+                withContext(Dispatchers.Main) {
+                    if (isConnected) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(this@SigninFragment.context, "Registration Successful", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@SigninFragment.context, HomeActivity::class.java)
+                        )
+                    }
+                    else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(this@SigninFragment.context, "An error occurred", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-
-        FirebaseAPIManager.signinUser(username, email, password)
-
-
-
+        }
     }
 }

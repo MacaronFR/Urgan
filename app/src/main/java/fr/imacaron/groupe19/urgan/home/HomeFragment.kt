@@ -20,9 +20,6 @@ import kotlinx.coroutines.withContext
 class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
-    private var wishCount = 10
-    private var likesCount = 10
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
@@ -30,16 +27,8 @@ class HomeFragment: Fragment() {
         val adapter = GameAdapter(listOf()) { findNavController().navigate(R.id.DetailFragment) }
         binding.list.adapter = adapter
 
-        if(wishCount == 0){
-            binding.wishCount.visibility = View.INVISIBLE
-        }else{
-            binding.wishCount.text = wishCount.toString()
-        }
-        if(likesCount == 0){
-            binding.likeCount.visibility = View.INVISIBLE
-        }else{
-            binding.likeCount.text = likesCount.toString()
-        }
+        updateWishCount(0)
+        updateLikeCount(0)
         return binding.root
     }
 
@@ -51,19 +40,11 @@ class HomeFragment: Fragment() {
         }
 
         binding.wishlist.setOnClickListener {
-            if(wishCount == 0){
-                findNavController().navigate(R.id.WishlistEmptyFragment)
-            }else{
-                findNavController().navigate(R.id.WishlistFragment)
-            }
+            findNavController().navigate(R.id.WishlistFragment)
         }
 
         binding.like.setOnClickListener {
-            if(likesCount == 0){
-                findNavController().navigate(R.id.LikesEmptyFragment)
-            }else{
-                findNavController().navigate(R.id.LikesFragment)
-            }
+            findNavController().navigate(R.id.LikesFragment)
         }
 
         GlobalScope.launch {
@@ -73,16 +54,38 @@ class HomeFragment: Fragment() {
                     it.app_id
                 }
 
-                FirebaseAPIManager.getWishListIds()
+                var user = FirebaseAPIManager.getCurrentUser()
 
                 withContext(Dispatchers.Main) {
-                    binding.search.text = games.response.ranks[0].app_id.toString()
                     val adapter = GameAdapter(games_details_ids) { findNavController().navigate(R.id.DetailFragment) }
                     binding.list.adapter = adapter
+
+                    updateWishCount(user?.wishList?.size ?: -1)
+                    updateLikeCount(user?.wishList?.size ?: -1)
+
                 }
 
             }
         }
 
     }
+
+    fun updateWishCount(count: Int) {
+        if(count == 0){
+            binding.wishCount.visibility = View.INVISIBLE
+        }else{
+            binding.wishCount.text = count.toString()
+            binding.wishCount.visibility = View.VISIBLE
+        }
+    }
+
+    fun updateLikeCount(count: Int) {
+        if(count == 0){
+            binding.likeCount.visibility = View.INVISIBLE
+        }else{
+            binding.likeCount.text = count.toString()
+            binding.wishCount.visibility = View.VISIBLE
+        }
+    }
+
 }

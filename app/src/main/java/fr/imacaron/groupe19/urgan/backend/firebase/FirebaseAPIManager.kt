@@ -1,5 +1,8 @@
 package fr.imacaron.groupe19.urgan.backend.firebase
 
+import android.content.Intent
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -8,35 +11,55 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
+import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager.auth
 import fr.imacaron.groupe19.urgan.data.User
+import fr.imacaron.groupe19.urgan.home.HomeActivity
 import kotlinx.coroutines.tasks.await
 import okhttp3.internal.wait
 import okhttp3.internal.waitMillis
 
 object FirebaseAPIManager {
 
-    var auth: FirebaseAuth = Firebase.auth
+    private var auth: FirebaseAuth = Firebase.auth
 
     private var db = FirebaseFirestore.getInstance()
+
+    fun isLogged(): Boolean {
+        return auth.currentUser != null
+    }
 
     fun signOut() {
         auth.signOut()
     }
 
-    fun signinUser(pseudo: String, email: String, password: String) {
+    suspend fun signinUser(pseudo: String, email: String, password: String): Boolean {
+        var isConnected = false;
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
 
-        val user = User(
-            pseudo,
-            email,
-            password,
-            arrayListOf<Long>(),
-            arrayListOf<Long>()
-        )
+                    isConnected = true
 
-        db.collection("Users")
-            .document(email)
-            .set(user)
+                    val user = User(
+                        pseudo,
+                        email,
+                        password,
+                        arrayListOf<Long>(),
+                        arrayListOf<Long>()
+                    )
 
+                    db.collection("Users")
+                        .document(email)
+                        .set(user)
+
+
+                } else {
+                    isConnected = false
+                }
+            }
+            .await()
+
+        return isConnected;
     }
 
     suspend fun loginUser(email: String, password: String): Boolean {
@@ -49,57 +72,17 @@ object FirebaseAPIManager {
         return res
     }
 
-
-    fun getCurrentUser(): FirebaseUser? {
-        return auth.currentUser
+    suspend fun getCurrentUser(): User? {
+        return getUserByEmail(auth.currentUser?.email ?: "")
     }
 
-    suspend fun getWishListIds(): ArrayList<Long> {
-        var app_ids: ArrayList<Long> = ArrayList()
-
+    suspend fun getUserByEmail(email: String): User? {
         var documentSnapshot = db.collection("Users")
-            .document(getCurrentUser()?.email.toString())
+            .document(email)
             .get()
             .await()
 
-        val user = documentSnapshot.toObject(User::class.java)
-        println(user)
-        if (user != null) {
-            app_ids = user.wishList!!
-        }
-
-        return app_ids
+        return documentSnapshot.toObject(User::class.java)
     }
-
-    suspend fun addAppInWishList(app_id: Long) {
-        var documentSnapshot = db.collection("Users")
-            .document(getCurrentUser()?.email.toString())
-            .get()
-            .await()
-
-        val user = documentSnapshot.toObject(User::class.java)
-
-        user?.wishList?.add(app_id)
-
-    }
-
-    suspend fun getLikeListIds(id: Long): ArrayList<Long> {
-        var app_ids: ArrayList<Long> = ArrayList()
-
-        var documentSnapshot = db.collection("Users")
-            .document(getCurrentUser()?.email.toString())
-            .get()
-            .await()
-
-        val user = documentSnapshot.toObject(User::class.java)
-        println(user)
-        if (user != null) {
-            app_ids = user.likeList!!
-        }
-
-        return app_ids
-    }
-
-
 
 }

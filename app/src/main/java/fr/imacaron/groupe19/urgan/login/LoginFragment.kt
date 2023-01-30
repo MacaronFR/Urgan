@@ -19,6 +19,10 @@ import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentLoginBinding
 import fr.imacaron.groupe19.urgan.home.HomeActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginFragment: Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -50,18 +54,22 @@ class LoginFragment: Fragment() {
         val email: String = view.findViewById<EditText>(R.id.email).text.toString()
         val password: String = view.findViewById<EditText>(R.id.password).text.toString()
 
-        FirebaseAPIManager.auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this.requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(this.requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
-                    notifyUser()
-                    startActivity(Intent(this.requireContext(), HomeActivity::class.java))
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(this.requireContext(), "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                val isConnected = FirebaseAPIManager.loginUser(email, password)
+                withContext(Dispatchers.Main) {
+                    if (isConnected) {
+                        Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
+                        notifyUser()
+                        startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(this@LoginFragment.context, "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
             }
+        }
     }
 
     private fun notifyUser() {
