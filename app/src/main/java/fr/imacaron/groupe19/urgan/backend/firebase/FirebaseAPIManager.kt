@@ -1,22 +1,11 @@
 package fr.imacaron.groupe19.urgan.backend.firebase
 
-import android.content.Intent
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
-import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager.auth
 import fr.imacaron.groupe19.urgan.data.User
-import fr.imacaron.groupe19.urgan.home.HomeActivity
 import kotlinx.coroutines.tasks.await
-import okhttp3.internal.wait
-import okhttp3.internal.waitMillis
 
 object FirebaseAPIManager {
 
@@ -70,6 +59,13 @@ object FirebaseAPIManager {
             }
             .await()
         return res
+    }
+
+    suspend fun setUser(user: User) {
+        db.collection("Users")
+            .document(getCurrentUser()?.email ?: "")
+            .set(user)
+            .await()
     }
 
     suspend fun getCurrentUser(): User? {
