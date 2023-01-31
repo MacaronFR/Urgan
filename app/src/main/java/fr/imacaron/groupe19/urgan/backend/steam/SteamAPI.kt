@@ -1,6 +1,7 @@
 package fr.imacaron.groupe19.urgan.backend.steam
 
 import com.google.gson.JsonElement
+import fr.imacaron.groupe19.urgan.backend.steam.response.AppSearchResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.GameReviewResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.MostPlayedGameResponse
 import kotlinx.coroutines.Deferred
@@ -15,9 +16,12 @@ interface SteamAPI {
     fun getMostPlayedGames() : Deferred<MostPlayedGameResponse>
 
     @GET("/api/appdetails")
-    fun getGameDetails(@Query("appids") id : Long) : Call<JsonElement>
+    fun getGameDetailsById(@Query("appids") id : Long) : Call<JsonElement>
 
     @GET("/appreviews/{app_id}?json=1")
-    fun getGameReviews(@Path("app_id") id : Long) : Deferred<GameReviewResponse>
+    fun getGameReviewsById(@Path("app_id") id : Long) : Deferred<GameReviewResponse>
+
+    @GET("/actions/SearchApps/{name}")
+    fun getAppsByName(@Path("name") name: String) : Deferred<List<AppSearchResponse>>
 
 }

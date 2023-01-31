@@ -7,8 +7,9 @@ import java.io.Serializable
 data class Game(
     val title: String,
     val editor: String,
-    val price: Double,
+    val price: String,
     val picture: String,
+    val background: String,
     val description: String,
     val banner: String,
     val wish: Boolean,
@@ -19,7 +20,8 @@ data class Game(
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readDouble(),
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -33,8 +35,9 @@ data class Game(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeString(editor)
-        parcel.writeDouble(price)
+        parcel.writeString(price)
         parcel.writeString(picture)
+        parcel.writeString(background)
         parcel.writeString(description)
         parcel.writeString(banner)
         parcel.writeByte(if (wish) 1 else 0)

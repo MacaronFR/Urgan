@@ -61,7 +61,6 @@
             app:layout_constraintTop_toBottomOf="@id/search"
             android:id="@+id/nb_res"
             android:layout_marginVertical="@dimen/in_margin"
-            android:text="Nombre de résultat : 42"
     />
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

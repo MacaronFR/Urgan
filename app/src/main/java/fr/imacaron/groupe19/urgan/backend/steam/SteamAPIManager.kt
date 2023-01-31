@@ -5,19 +5,27 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import fr.imacaron.groupe19.urgan.backend.steam.response.GameDetailsResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.GameReviewResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.MostPlayedGameResponse
+import fr.imacaron.groupe19.urgan.backend.steam.response.AppSearchResponse
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
 object SteamAPIManager {
 
-    val store = Retrofit.Builder()
+    private val community = Retrofit.Builder()
+        .baseUrl("https://steamcommunity.com/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
+        .create(SteamAPI::class.java)
+
+    private val store = Retrofit.Builder()
         .baseUrl("https://store.steampowered.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
         .create(SteamAPI::class.java)
 
-    val api = Retrofit.Builder()
+    private val api = Retrofit.Builder()
         .baseUrl("https://api.steampowered.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
@@ -27,13 +35,16 @@ object SteamAPIManager {
     suspend fun getMostPlayedGames(): MostPlayedGameResponse = api.getMostPlayedGames().await()
 
     suspend fun getGameDetails(id : Long): GameDetailsResponse {
-        val response = store.getGameDetails(id).await()
+        val response = store.getGameDetailsById(id).await()
         val game_details = response.asJsonObject.getAsJsonObject(id.toString())
         println(game_details.toString())
         return GsonBuilder().create().fromJson(game_details, GameDetailsResponse::class.java)
     }
 
-    suspend fun getGameReviews(id: Long): GameReviewResponse = store.getGameReviews(id).await()
+    suspend fun getGameReviews(id: Long): GameReviewResponse = store.getGameReviewsById(id).await()
+
+
+    suspend fun getAppsByName(name: String): List<AppSearchResponse> = community.getAppsByName(name).await()
 
 }
 

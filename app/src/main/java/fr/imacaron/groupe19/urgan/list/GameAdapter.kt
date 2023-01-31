@@ -26,6 +26,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
         val editor: TextView
         val price: TextView
         val picture: ImageView
+        val background: ImageView
         val more: TextView
 
         init {
@@ -33,6 +34,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
             editor = view.findViewById(R.id.editor)
             price = view.findViewById(R.id.price)
             picture = view.findViewById(R.id.logo)
+            background = view.findViewById(R.id.background)
             more = view.findViewById(R.id.more)
         }
     }
@@ -60,8 +62,9 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     game = Game(
                         game_details.data?.name ?: "",
                         game_details.data?.developers?.getOrNull(0) ?: "",
-                        game_details.data?.priceOverview?.final?.toDouble() ?: 0.0,
+                        if (game_details.data?.isFree == true) "free" else (game_details.data?.priceOverview?.finalFormatted ?: "-€"),
                         game_details.data?.headerImage ?: "",
+                        game_details.data?.background ?: "",
                         game_details.data?.shortDescription ?: "",
                         game_details.data?.headerImage ?: "",
                         false,
@@ -79,6 +82,16 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     }catch (e: MalformedURLException){
                         e.printStackTrace()
                     }
+
+                    try{
+                        val url = URL(game.background)
+                        val bmp = BitmapFactory.decodeStream(url.openStream())
+                        withContext(Dispatchers.Main){
+                            holder.background.setImageBitmap(bmp)
+                        }
+                    }catch (e: MalformedURLException){
+                        e.printStackTrace()
+                    }
                 }
                 withContext(Dispatchers.Main) {
                     holder.more.setOnClickListener{
@@ -87,12 +100,8 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     }
                     holder.title.text = game.title
                     holder.editor.text = game.editor
-                    holder.price.text = "Prix : ${game.price/100}€"
+                    holder.price.text = "Prix : ${game.price}"
                 }
-            }
-
-            GlobalScope.launch(Dispatchers.IO){
-
             }
         }
     }

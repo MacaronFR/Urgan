@@ -6,6 +6,18 @@
                                                    android:background="@drawable/rounded"
                                                    android:backgroundTint="@color/secondary"
 >
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/logo"
+            android:alpha="0.5"
+            android:contentDescription="Background du jeu"
+            android:id="@+id/background"
+            />
+
     <ImageView
             android:layout_width="64dp"
             android:layout_height="match_parent"
