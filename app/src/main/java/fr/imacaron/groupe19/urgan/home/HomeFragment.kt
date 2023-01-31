@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentHomeBinding
+import fr.imacaron.groupe19.urgan.error.NetworkException
 import fr.imacaron.groupe19.urgan.list.GameAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -48,8 +50,12 @@ class HomeFragment: Fragment() {
         }
 
         GlobalScope.launch {
-            withContext(Dispatchers.IO) {
-                val games = SteamAPIManager.getMostPlayedGames()
+            val res = withContext(Dispatchers.IO) {
+                val games = try {
+                    SteamAPIManager.getMostPlayedGames()
+                }catch (e: NetworkException){
+                    return@withContext 1
+                }
                 val games_details_ids = games.response.ranks.map {
                     it.app_id
                 }
@@ -64,7 +70,10 @@ class HomeFragment: Fragment() {
                     updateLikeCount(user?.wishList?.size ?: -1)
 
                 }
-
+                0
+            }
+            when(res){
+                1 -> Toast.makeText(context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
             }
         }
 

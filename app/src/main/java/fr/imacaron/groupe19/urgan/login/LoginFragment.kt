@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentLoginBinding
@@ -48,16 +50,26 @@ class LoginFragment: Fragment() {
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
                 if(email.isNotEmpty() && password.isNotEmpty()){
-                    val isConnected = FirebaseAPIManager.loginUser(email, password)
-                    withContext(Dispatchers.Main) {
-                        if (isConnected) {
-                            Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(this@LoginFragment.context, "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
-                        }
+                    try{
+                        val isConnected = FirebaseAPIManager.loginUser(email, password)
+                        withContext(Dispatchers.Main) {
+                            if (isConnected) {
+                                Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(this@LoginFragment.context, "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
+                            }
 
+                        }
+                    }catch (e: FirebaseNetworkException){
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(this@LoginFragment.context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
+                        }
+                    }catch (e: FirebaseAuthInvalidCredentialsException) {
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(this@LoginFragment.context, "Les informations renseigné sont incorrecte", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
