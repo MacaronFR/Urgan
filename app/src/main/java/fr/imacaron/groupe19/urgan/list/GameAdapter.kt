@@ -61,7 +61,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     } as ArrayList
                     game = Game(
                         game_details.data?.name ?: "",
-                        game_details.data?.developers?.getOrNull(0) ?: "",
+                        game_details.data?.publishers?.getOrNull(0) ?: "",
                         if (game_details.data?.isFree == true) "free" else (game_details.data?.priceOverview?.finalFormatted ?: "-€"),
                         game_details.data?.headerImage ?: "",
                         game_details.data?.background ?: "",

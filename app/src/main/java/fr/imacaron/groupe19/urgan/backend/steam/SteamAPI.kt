@@ -16,7 +16,7 @@ interface SteamAPI {
     fun getMostPlayedGames() : Deferred<MostPlayedGameResponse>
 
     @GET("/api/appdetails")
-    fun getGameDetailsById(@Query("appids") id : Long) : Call<JsonElement>
+    fun getGameDetailsById(@Query("appids") id : Long, @Query("l") lang: String = "french") : Call<JsonElement>
 
     @GET("/appreviews/{app_id}?json=1")
     fun getGameReviewsById(@Path("app_id") id : Long) : Deferred<GameReviewResponse>

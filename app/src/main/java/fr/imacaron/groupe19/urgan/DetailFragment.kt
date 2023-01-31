@@ -31,7 +31,7 @@ class DetailFragment: Fragment() {
             game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
                 bundle.getParcelable("data", Game::class.java)!!
             }else {
-                bundle.getParcelable("")!!
+                bundle.getParcelable("data")!!
             }
             setData()
         }
