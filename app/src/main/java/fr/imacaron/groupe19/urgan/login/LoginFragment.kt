@@ -1,18 +1,11 @@
 package fr.imacaron.groupe19.urgan.login
 
-import android.Manifest
-import android.app.PendingIntent
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import fr.imacaron.groupe19.urgan.R
@@ -26,8 +19,6 @@ import kotlinx.coroutines.withContext
 
 class LoginFragment: Fragment() {
     private lateinit var binding: FragmentLoginBinding
-
-    private var notificationId = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -46,58 +37,30 @@ class LoginFragment: Fragment() {
         }
 
         binding.login.setOnClickListener {
-            loginUser(view)
+            loginUser()
         }
     }
 
-    private fun loginUser(view: View) {
-        val email: String = view.findViewById<EditText>(R.id.email).text.toString()
-        val password: String = view.findViewById<EditText>(R.id.password).text.toString()
+    private fun loginUser() {
+        val email = binding.email.text.toString()
+        val password = binding.password.text.toString()
 
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
-                val isConnected = FirebaseAPIManager.loginUser(email, password)
-                withContext(Dispatchers.Main) {
-                    if (isConnected) {
-                        Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
-                        notifyUser()
-                        startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(this@LoginFragment.context, "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
-                    }
+                if(email.isNotEmpty() && password.isNotEmpty()){
+                    val isConnected = FirebaseAPIManager.loginUser(email, password)
+                    withContext(Dispatchers.Main) {
+                        if (isConnected) {
+                            Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(this@LoginFragment.context, "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
+                        }
 
+                    }
                 }
             }
         }
     }
-
-    private fun notifyUser() {
-        val intent = Intent(this.requireContext(), HomeActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent = PendingIntent.getActivity(this.requireContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val builder = NotificationCompat.Builder(this.requireContext(), "Bonjour")
-            .setSmallIcon(R.drawable.logo)
-            .setContentTitle("Connecté")
-            .setContentText("Vous êtes connecter")
-            .setStyle(NotificationCompat.BigTextStyle().bigText("Vous vous êtes connecter à l'application urgan l'homme goujon avec le compte TODO"))
-            .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
-        with(NotificationManagerCompat.from(this.requireContext())){
-            if (ActivityCompat.checkSelfPermission(
-                    this@LoginFragment.requireContext(),
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(this@LoginFragment.requireActivity(), arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
-            }else{
-                notify(notificationId, builder.build())
-                notificationId++
-            }
-        }
-    }
-
-
 }
