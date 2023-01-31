@@ -63,7 +63,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                         game_details.data?.priceOverview?.final?.toDouble() ?: 0.0,
                         game_details.data?.headerImage ?: "",
                         game_details.data?.shortDescription ?: "",
-                        "",
+                        game_details.data?.headerImage ?: "",
                         false,
                         true,
                         game_reviews,

@@ -26,7 +26,7 @@ class DetailFragment: Fragment() {
         super.onCreate(savedInstanceState)
 
         println("Created")
-        setFragmentResultListener("gameData"){ requestKey, bundle ->
+        setFragmentResultListener("gameData"){ _, bundle ->
             println("CIC")
             game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
                 bundle.getParcelable("data", Game::class.java)!!
@@ -55,6 +55,10 @@ class DetailFragment: Fragment() {
 
         binding.toDesc.setOnClickListener {
             binding.descReviews.findNavController().navigate(R.id.DetailDescFragment, bundleOf("game" to game))
+        }
+
+        binding.toReviews.setOnClickListener {
+            binding.descReviews.findNavController().navigate(R.id.DetailReviewFragment, bundleOf("review" to game.reviews))
         }
     }
 

@@ -11,4 +11,11 @@
             android:label="DetailDesc"
             tools:layout="@layout/fragment_detail_desc"
     />
+
+    <fragment
+            android:id="@+id/DetailReviewFragment"
+            android:name="fr.imacaron.groupe19.urgan.DetailReviewFragment"
+            android:label="DetailReview"
+            tools:layout="@layout/fragment_detail_review"
+    />
 </navigation>
