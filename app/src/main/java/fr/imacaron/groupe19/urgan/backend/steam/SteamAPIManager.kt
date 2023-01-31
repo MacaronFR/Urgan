@@ -61,7 +61,21 @@ object SteamAPIManager {
     suspend fun getGameReviews(id: Long): GameReviewResponse = store.getGameReviewsById(id).await()
 
 
-    suspend fun getAppsByName(name: String): List<AppSearchResponse> = community.getAppsByName(name).await()
+    suspend fun getAppsByName(name: String): List<AppSearchResponse> {
+        return try {
+            community.getAppsByName(name).await()
+        }catch (e: Exception){
+            when(e) {
+                is UnknownHostException -> {
+                    throw NetworkException("Cannot resolve DNS")
+                }
+                else -> {
+                    e.printStackTrace()
+                }
+            }
+            listOf()
+        }
+    }
 
 }
 

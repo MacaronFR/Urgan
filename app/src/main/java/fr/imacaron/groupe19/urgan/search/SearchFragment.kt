@@ -6,16 +6,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
-import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentSearchBinding
-import fr.imacaron.groupe19.urgan.home.games
+import fr.imacaron.groupe19.urgan.error.NetworkException
+import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.list.GameAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -49,8 +47,15 @@ class SearchFragment: Fragment() {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 GlobalScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val res = SteamAPIManager.getAppsByName(s.toString())
+                    withContext(Dispatchers.IO + h) {
+                        val res = try {
+                            SteamAPIManager.getAppsByName(s.toString())
+                        }catch (e: NetworkException){
+                            withContext(Dispatchers.Main){
+                                Toast.makeText(context, "Pas de connexion internet", Toast.LENGTH_SHORT).show()
+                            }
+                            return@withContext
+                        }
                         val app_ids = res.map {
                             it.appid?.toLong() ?: 0
                         }

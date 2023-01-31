@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentLoginBinding
+import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.home.HomeActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -48,7 +49,7 @@ class LoginFragment: Fragment() {
         val password = binding.password.text.toString()
 
         GlobalScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO + h) {
                 if(email.isNotEmpty() && password.isNotEmpty()){
                     try{
                         val isConnected = FirebaseAPIManager.loginUser(email, password)

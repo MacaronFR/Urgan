@@ -14,10 +14,7 @@ import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentHomeBinding
 import fr.imacaron.groupe19.urgan.error.NetworkException
 import fr.imacaron.groupe19.urgan.list.GameAdapter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -50,7 +47,10 @@ class HomeFragment: Fragment() {
         }
 
         GlobalScope.launch {
-            val res = withContext(Dispatchers.IO) {
+            val h = CoroutineExceptionHandler{ _, t ->
+                t.printStackTrace()
+            }
+            val res = withContext(Dispatchers.IO + h) {
                 val games = try {
                     SteamAPIManager.getMostPlayedGames()
                 }catch (e: NetworkException){
