@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
@@ -15,7 +19,7 @@ import kotlinx.coroutines.*
 import java.net.MalformedURLException
 import java.net.URL
 
-class GameAdapter(private val dataSet: List<Long>, val onClick: View.OnClickListener): RecyclerView.Adapter<GameAdapter.ViewHolder>() {
+class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val title: TextView
@@ -42,7 +46,6 @@ class GameAdapter(private val dataSet: List<Long>, val onClick: View.OnClickList
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(dataSet[position]){
             var game: Game
-            holder.more.setOnClickListener(onClick)
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
                     val game_details = SteamAPIManager.getGameDetails(this@with)
@@ -78,6 +81,10 @@ class GameAdapter(private val dataSet: List<Long>, val onClick: View.OnClickList
                     }
                 }
                 withContext(Dispatchers.Main) {
+                    holder.more.setOnClickListener{
+                        fragment.setFragmentResult("gameData", bundleOf("data" to game))
+                        fragment.findNavController().navigate(R.id.DetailFragment)
+                    }
                     holder.title.text = game.title
                     holder.editor.text = game.editor
                     holder.price.text = "Prix : ${game.price/100}€"

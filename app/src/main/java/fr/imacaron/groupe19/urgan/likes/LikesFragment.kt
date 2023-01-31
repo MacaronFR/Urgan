@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.databinding.FragmentLikeBinding
 import fr.imacaron.groupe19.urgan.home.games
@@ -22,9 +21,7 @@ class LikesFragment: Fragment() {
         binding = FragmentLikeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         likesGames = games
-        binding.list.adapter = GameAdapter(listOf()){
-            findNavController().navigate(R.id.DetailFragment)
-        }
+        binding.list.adapter = GameAdapter(listOf(), this)
         return binding.root
     }
 

@@ -60,6 +60,7 @@ class DetailFragment: Fragment() {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun setData() {
+        println("set data")
         binding.title.text = game.title
         binding.editor.text = game.editor
         GlobalScope.launch(Dispatchers.IO){

@@ -24,7 +24,7 @@ class HomeFragment: Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-        val adapter = GameAdapter(listOf()) { findNavController().navigate(R.id.DetailFragment) }
+        val adapter = GameAdapter(listOf(), this)
         binding.list.adapter = adapter
 
         updateWishCount(0)
@@ -49,15 +49,15 @@ class HomeFragment: Fragment() {
 
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
-                var games = SteamAPIManager.getMostPlayedGames()
-                var games_details_ids = games.response.ranks.map {
+                val games = SteamAPIManager.getMostPlayedGames()
+                val games_details_ids = games.response.ranks.map {
                     it.app_id
                 }
 
-                var user = FirebaseAPIManager.getCurrentUser()
+                val user = FirebaseAPIManager.getCurrentUser()
 
                 withContext(Dispatchers.Main) {
-                    val adapter = GameAdapter(games_details_ids) { findNavController().navigate(R.id.DetailFragment) }
+                    val adapter = GameAdapter(games_details_ids, this@HomeFragment)
                     binding.list.adapter = adapter
 
                     updateWishCount(user?.wishList?.size ?: -1)
