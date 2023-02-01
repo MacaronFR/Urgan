@@ -109,7 +109,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.85">
+            app:layout_constraintVertical_bias="0.75">
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
@@ -119,28 +119,5 @@
                 android:background="@drawable/button_first"
                 android:id="@+id/do_signin"
         />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            android:text="@string/login"
-            android:layout_marginHorizontal="@dimen/ext_margin"
-            android:layout_marginTop="@dimen/in_margin"
-            app:layout_constraintTop_toBottomOf="@id/do_signin"
-            android:background="@drawable/button_second"
-            android:id="@+id/go_login"
-            />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <fr.imacaron.groupe19.urgan.views.UnderLineTextView
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/forgot"
-        android:text="@string/forgot"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="@dimen/ext_margin"
-        />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

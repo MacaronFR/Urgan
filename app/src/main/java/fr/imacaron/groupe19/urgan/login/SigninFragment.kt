@@ -34,14 +34,6 @@ class SigninFragment: Fragment() {
         binding.doSignin.setOnClickListener {
             registerUser(view)
         }
-
-        binding.goLogin.setOnClickListener {
-            findNavController().navigate(R.id.LoginFragment)
-        }
-
-        binding.forgot.setOnClickListener {
-            findNavController().navigate(R.id.ForgotFragment)
-        }
     }
 
     private fun registerUser(view: View) {

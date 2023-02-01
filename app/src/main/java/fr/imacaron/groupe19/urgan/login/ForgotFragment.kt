@@ -20,14 +20,6 @@ class ForgotFragment: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.goLogin.setOnClickListener {
-            findNavController().navigate(R.id.LoginFragment)
-        }
-
-        binding.goSignin.setOnClickListener {
-            findNavController().navigate(R.id.SigninFragment)
-        }
-
         binding.resend.setOnClickListener {
             println("Forgot")
         }
