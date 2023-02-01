@@ -16,10 +16,12 @@ class DetailReviewFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
         val reviews = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
-            arguments?.getParcelableArrayList("data", Review::class.java)!!
+            arguments?.getParcelableArrayList("review", Review::class.java) ?: listOf()
         }else {
-            arguments?.getParcelableArrayList("data")!!
+            println("old")
+            arguments?.getParcelableArrayList("review") ?: listOf()
         }
+        println(reviews.size)
         binding.list.adapter = ReviewAdapter(reviews.toList())
         return binding.root
     }
