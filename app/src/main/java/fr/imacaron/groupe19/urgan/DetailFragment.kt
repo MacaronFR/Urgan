@@ -31,7 +31,7 @@ class DetailFragment: Fragment() {
             game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
                 bundle.getParcelable("data", Game::class.java)!!
             }else {
-                bundle.getParcelable("")!!
+                bundle.getParcelable("data")!!
             }
             setData()
         }
@@ -41,8 +41,6 @@ class DetailFragment: Fragment() {
         binding = FragmentDetailGameBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
