@@ -3,7 +3,6 @@ package fr.imacaron.groupe19.urgan.home.detail
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,15 +34,13 @@ class DetailFragment: Fragment() {
                 bundle.getParcelable("data")!!
             }
             setData()
+            updateWish()
+            updateLike()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailGameBinding.inflate(inflater, container, false)
-
-        updateWish()
-        updateLike()
-
         return binding.root
     }
 
@@ -70,13 +67,11 @@ class DetailFragment: Fragment() {
         binding.like.setOnClickListener {
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
-                    val isLiked: Boolean = if ((activity as HomeActivity).user.likeList?.contains(game.id.toLong()) == false) {
+                    if ((activity as HomeActivity).user.likeList?.contains(game.id.toLong()) == false) {
                         (activity as HomeActivity).user.likeList?.add(game.id.toLong())
-                        true
                     }
                     else {
                         (activity as HomeActivity).user.likeList?.remove(game.id.toLong())
-                        false
                     }
                     FirebaseAPIManager.setUser((activity as HomeActivity).user)
 
@@ -90,13 +85,11 @@ class DetailFragment: Fragment() {
         binding.wishlist.setOnClickListener {
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
-                    val isWished: Boolean = if ((activity as HomeActivity).user.wishList?.contains(game.id.toLong()) == false) {
+                    if ((activity as HomeActivity).user.wishList?.contains(game.id.toLong()) == false) {
                         (activity as HomeActivity).user.wishList?.add(game.id.toLong())
-                        true
                     }
                     else {
                         (activity as HomeActivity).user.wishList?.remove(game.id.toLong())
-                        false
                     }
                     FirebaseAPIManager.setUser((activity as HomeActivity).user)
 
