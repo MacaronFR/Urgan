@@ -26,8 +26,21 @@ class HomeFragment: Fragment() {
         val adapter = GameAdapter(listOf(), this)
         binding.list.adapter = adapter
 
-        updateWishCount(0)
-        updateLikeCount(0)
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                val res = FirebaseAPIManager.getCurrentUser()
+                if (res != null) {
+                    (activity as HomeActivity).user = res
+                    withContext(Dispatchers.Main) {
+                        updateWishCount()
+                        updateLikeCount()
+                    }
+                }
+            }
+        }
+
+
+
         return binding.root
     }
 
@@ -60,15 +73,9 @@ class HomeFragment: Fragment() {
                     it.app_id
                 }
 
-                val user = FirebaseAPIManager.getCurrentUser()
-
                 withContext(Dispatchers.Main) {
                     val adapter = GameAdapter(games_details_ids, this@HomeFragment)
                     binding.list.adapter = adapter
-
-                    updateWishCount(user?.wishList?.size ?: -1)
-                    updateLikeCount(user?.wishList?.size ?: -1)
-
                 }
                 0
             }
@@ -79,7 +86,8 @@ class HomeFragment: Fragment() {
 
     }
 
-    fun updateWishCount(count: Int) {
+    fun updateWishCount() {
+        val count = (activity as HomeActivity).user.wishList?.size
         if(count == 0){
             binding.wishCount.visibility = View.INVISIBLE
         }else{
@@ -88,7 +96,8 @@ class HomeFragment: Fragment() {
         }
     }
 
-    fun updateLikeCount(count: Int) {
+    fun updateLikeCount() {
+        val count = (activity as HomeActivity).user.likeList?.size
         if(count == 0){
             binding.likeCount.visibility = View.INVISIBLE
         }else{

@@ -5,10 +5,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.data.Game
+import fr.imacaron.groupe19.urgan.data.User
 import fr.imacaron.groupe19.urgan.databinding.ActivityHomeBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeActivity: AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+
+    lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
