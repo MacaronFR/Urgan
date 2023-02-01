@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentSigninBinding
+import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.home.HomeActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -31,7 +31,7 @@ class SigninFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.doSignin.setOnClickListener {
-            registerUser(view);
+            registerUser(view)
         }
     }
 
@@ -46,7 +46,7 @@ class SigninFragment: Fragment() {
         }
 
         GlobalScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO + h) {
 
                 val isConnected = FirebaseAPIManager.signinUser(username, email, password)
 

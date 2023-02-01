@@ -15,6 +15,7 @@ import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.data.Review
+import fr.imacaron.groupe19.urgan.error.h
 import kotlinx.coroutines.*
 import java.net.MalformedURLException
 import java.net.URL
@@ -49,7 +50,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
         with(dataSet[position]){
             var game: Game
             GlobalScope.launch {
-                withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO + h) {
                     val game_details = SteamAPIManager.getGameDetails(this@with)
                     val game_reviews_response = SteamAPIManager.getGameReviews(this@with)
                     val game_reviews = game_reviews_response.reviews.map {
@@ -61,7 +62,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     } as ArrayList
                     game = Game(
                         game_details.data?.name ?: "",
-                        game_details.data?.developers?.getOrNull(0) ?: "",
+                        game_details.data?.publishers?.getOrNull(0) ?: "",
                         if (game_details.data?.isFree == true) "free" else (game_details.data?.priceOverview?.finalFormatted ?: "-€"),
                         game_details.data?.headerImage ?: "",
                         game_details.data?.background ?: "",

@@ -6,8 +6,11 @@ import fr.imacaron.groupe19.urgan.backend.steam.response.GameDetailsResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.GameReviewResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.MostPlayedGameResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.AppSearchResponse
+import fr.imacaron.groupe19.urgan.error.NetworkException
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import java.net.UnknownHostException
 
 object SteamAPIManager {
 
@@ -32,7 +35,21 @@ object SteamAPIManager {
         .build()
         .create(SteamAPI::class.java)
 
-    suspend fun getMostPlayedGames(): MostPlayedGameResponse = api.getMostPlayedGames().await()
+    suspend fun getMostPlayedGames(): MostPlayedGameResponse {
+        return try {
+            api.getMostPlayedGames().await()
+        }catch (e: Exception){
+            when(e) {
+                is UnknownHostException -> {
+                    throw NetworkException("Cannot resolve DNS")
+                }
+                else -> {
+                    e.printStackTrace()
+                }
+            }
+            MostPlayedGameResponse(MostPlayedGameResponse.Response(0, listOf()))
+        }
+    }
 
     suspend fun getGameDetails(id : Long): GameDetailsResponse {
         val response = store.getGameDetailsById(id).await()
@@ -44,7 +61,21 @@ object SteamAPIManager {
     suspend fun getGameReviews(id: Long): GameReviewResponse = store.getGameReviewsById(id).await()
 
 
-    suspend fun getAppsByName(name: String): List<AppSearchResponse> = community.getAppsByName(name).await()
+    suspend fun getAppsByName(name: String): List<AppSearchResponse> {
+        return try {
+            community.getAppsByName(name).await()
+        }catch (e: Exception){
+            when(e) {
+                is UnknownHostException -> {
+                    throw NetworkException("Cannot resolve DNS")
+                }
+                else -> {
+                    e.printStackTrace()
+                }
+            }
+            listOf()
+        }
+    }
 
 }
 
