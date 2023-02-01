@@ -1,5 +1,6 @@
 package fr.imacaron.groupe19.urgan
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,13 @@ class DetailReviewFragment: Fragment() {
     private lateinit var binding: FragmentDetailReviewBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        println("Coucou")
         binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
-        val reviews = arguments?.getParcelableArrayList<Review>("review")
-        binding.list.adapter = ReviewAdapter(reviews?.toList() ?: listOf())
+        val reviews = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
+            arguments?.getParcelableArrayList("data", Review::class.java)!!
+        }else {
+            arguments?.getParcelableArrayList("data")!!
+        }
+        binding.list.adapter = ReviewAdapter(reviews.toList())
         return binding.root
     }
 }

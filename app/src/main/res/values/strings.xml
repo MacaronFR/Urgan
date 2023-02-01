@@ -27,6 +27,7 @@
     <string name="search">Rechercher un jeu …</string>
     <string name="game_background">Background du jeu</string>
     <string name="more">En savoir plus</string>
+    <string name="price">Prix : %1$s</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

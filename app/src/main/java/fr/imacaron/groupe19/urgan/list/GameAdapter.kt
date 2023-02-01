@@ -68,7 +68,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                         game_details.data?.background ?: "",
                         game_details.data?.shortDescription ?: "",
                         game_details.data?.headerImage ?: "",
-                        false,
+                        true,
                         true,
                         game_reviews,
                         game_details.data?.steamAppid ?: 0
@@ -101,7 +101,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     }
                     holder.title.text = game.title
                     holder.editor.text = game.editor
-                    holder.price.text = "Prix : ${game.price}"
+                    holder.price.text = fragment.requireContext().resources.getString(R.string.price, game.price)
                 }
             }
         }

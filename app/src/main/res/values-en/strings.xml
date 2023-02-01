@@ -26,4 +26,5 @@
     <string name="search">Search game …</string>
     <string name="game_background">Game Background</string>
     <string name="more">More information</string>
+    <string name="price">Price : %1$s</string>
 </resources>

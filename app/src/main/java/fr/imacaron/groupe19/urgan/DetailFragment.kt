@@ -3,10 +3,10 @@ package fr.imacaron.groupe19.urgan
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -28,7 +28,6 @@ class DetailFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener("gameData"){ _, bundle ->
-            println("CIC")
             game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
                 bundle.getParcelable("data", Game::class.java)!!
             }else {
@@ -43,10 +42,9 @@ class DetailFragment: Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        println("View Created")
 
         binding.back.setOnClickListener {
             findNavController().navigateUp()
@@ -67,24 +65,25 @@ class DetailFragment: Fragment() {
         binding.like.setOnClickListener {
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
-                    var isLiked = false
-                    if ((activity as HomeActivity).user.likeList?.contains(game.id.toLong()) == false) {
+                    val isLiked: Boolean = if ((activity as HomeActivity).user.likeList?.contains(game.id.toLong()) == false) {
                         (activity as HomeActivity).user.likeList?.add(game.id.toLong())
-                        isLiked = true
+                        true
                     }
                     else {
                         (activity as HomeActivity).user.likeList?.remove(game.id.toLong())
-                        isLiked = false
+                        false
                     }
                     FirebaseAPIManager.setUser((activity as HomeActivity).user)
 
                     withContext(Dispatchers.Main) {
+                        Log.e("MAIS OU", "TEST")
                         // Changer l'affichage du logo
                         if (isLiked) {
-                            binding.like.setBackgroundColor(250)
+                            println("LIKE")
+                            binding.like.setImageResource(R.drawable.like_full)
                         }
                         else {
-                            binding.like.setBackgroundColor(0)
+                            binding.like.setBackgroundColor(R.drawable.like)
                         }
                     }
                 }
@@ -94,24 +93,23 @@ class DetailFragment: Fragment() {
         binding.wishlist.setOnClickListener {
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
-                    var isWished = false
-                    if ((activity as HomeActivity).user.wishList?.contains(game.id.toLong()) == false) {
+                    val isWished: Boolean = if ((activity as HomeActivity).user.wishList?.contains(game.id.toLong()) == false) {
                         (activity as HomeActivity).user.wishList?.add(game.id.toLong())
-                        isWished = true
+                        true
                     }
                     else {
                         (activity as HomeActivity).user.wishList?.remove(game.id.toLong())
-                        isWished = false
+                        false
                     }
                     FirebaseAPIManager.setUser((activity as HomeActivity).user)
 
                     withContext(Dispatchers.Main) {
                         // Changer l'affichage du logo
                         if (isWished) {
-                            binding.wishlist.setBackgroundColor(250)
+                            binding.wishlist.setImageResource(R.drawable.whishlist_full)
                         }
                         else {
-                            binding.wishlist.setBackgroundColor(0)
+                            binding.wishlist.setImageResource(R.drawable.whishlist)
                         }
                     }
                 }
@@ -121,7 +119,6 @@ class DetailFragment: Fragment() {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun setData() {
-        println("set data")
         binding.title.text = game.title
         binding.editor.text = game.editor
         GlobalScope.launch(Dispatchers.IO){
@@ -145,5 +142,11 @@ class DetailFragment: Fragment() {
             }
         }
         binding.descReviews.findNavController().navigate(R.id.DetailDescFragment, bundleOf("game" to game))
+        if(game.like){
+            binding.like.setImageResource(R.drawable.like_full)
+        }
+        if(game.wish){
+            binding.wishlist.setImageResource(R.drawable.whishlist_full)
+        }
     }
 }
