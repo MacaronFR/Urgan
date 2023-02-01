@@ -98,7 +98,7 @@ class HomeFragment: Fragment() {
 
     fun updateWishCount() {
         val count = (activity as HomeActivity).user.wishList?.size
-        if(count == 0){
+        if(count == null || count <= 0){
             binding.wishCount.visibility = View.INVISIBLE
         }else{
             binding.wishCount.text = count.toString()
@@ -108,11 +108,11 @@ class HomeFragment: Fragment() {
 
     fun updateLikeCount() {
         val count = (activity as HomeActivity).user.likeList?.size
-        if(count == 0){
+        if(count == null || count <= 0){
             binding.likeCount.visibility = View.INVISIBLE
         }else{
             binding.likeCount.text = count.toString()
-            binding.wishCount.visibility = View.VISIBLE
+            binding.likeCount.visibility = View.VISIBLE
         }
     }
 

@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/SearchFragment"
-        android:name="fr.imacaron.groupe19.urgan.search.SearchFragment"
+        android:name="fr.imacaron.groupe19.urgan.home.search.SearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search"
     >
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/WishlistFragment"
-        android:name="fr.imacaron.groupe19.urgan.wishlist.WishlistFragment"
+        android:name="fr.imacaron.groupe19.urgan.home.wishlist.WishlistFragment"
         android:label="Wishlist"
         tools:layout="@layout/fragment_wishlist"
     >
@@ -63,7 +63,7 @@
 
     <fragment
             android:id="@+id/WishlistEmptyFragment"
-            android:name="fr.imacaron.groupe19.urgan.wishlist.WishlistEmptyFragment"
+            android:name="fr.imacaron.groupe19.urgan.home.wishlist.WishlistEmptyFragment"
             android:label="WishlistEmpty"
             tools:layout="@layout/fragment_empty_wishlist"
     >
@@ -72,7 +72,7 @@
 
     <fragment
             android:id="@+id/LikesFragment"
-            android:name="fr.imacaron.groupe19.urgan.likes.LikesFragment"
+            android:name="fr.imacaron.groupe19.urgan.home.likes.LikesFragment"
             android:label="Likes"
             tools:layout="@layout/fragment_like"
     >
@@ -84,7 +84,7 @@
 
     <fragment
             android:id="@+id/LikesEmptyFragment"
-            android:name="fr.imacaron.groupe19.urgan.likes.LikesEmptyFragment"
+            android:name="fr.imacaron.groupe19.urgan.home.likes.LikesEmptyFragment"
             android:label="LikesEmpty"
             tools:layout="@layout/fragment_empty_like"
     >

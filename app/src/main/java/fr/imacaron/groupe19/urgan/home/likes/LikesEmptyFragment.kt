@@ -1,4 +1,4 @@
-package fr.imacaron.groupe19.urgan.likes
+package fr.imacaron.groupe19.urgan.home.likes
 
 import android.os.Bundle
 import android.view.LayoutInflater

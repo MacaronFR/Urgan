@@ -1,4 +1,4 @@
-package fr.imacaron.groupe19.urgan.search
+package fr.imacaron.groupe19.urgan.home.search
 
 import android.os.Bundle
 import android.text.Editable

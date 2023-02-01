@@ -1,4 +1,4 @@
-package fr.imacaron.groupe19.urgan.wishlist
+package fr.imacaron.groupe19.urgan.home.wishlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
