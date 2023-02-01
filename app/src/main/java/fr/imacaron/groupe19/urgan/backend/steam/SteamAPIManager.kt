@@ -2,10 +2,7 @@ package fr.imacaron.groupe19.urgan.backend.steam
 
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import fr.imacaron.groupe19.urgan.backend.steam.response.GameDetailsResponse
-import fr.imacaron.groupe19.urgan.backend.steam.response.GameReviewResponse
-import fr.imacaron.groupe19.urgan.backend.steam.response.MostPlayedGameResponse
-import fr.imacaron.groupe19.urgan.backend.steam.response.AppSearchResponse
+import fr.imacaron.groupe19.urgan.backend.steam.response.*
 import fr.imacaron.groupe19.urgan.error.NetworkException
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -75,6 +72,10 @@ object SteamAPIManager {
             }
             listOf()
         }
+    }
+
+    suspend fun getPlayerDetails(id: Long): UserResponse {
+        return api.getPlayerDetail(id).await()
     }
 
 }

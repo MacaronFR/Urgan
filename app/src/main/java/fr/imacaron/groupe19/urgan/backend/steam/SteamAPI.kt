@@ -4,6 +4,7 @@ import com.google.gson.JsonElement
 import fr.imacaron.groupe19.urgan.backend.steam.response.AppSearchResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.GameReviewResponse
 import fr.imacaron.groupe19.urgan.backend.steam.response.MostPlayedGameResponse
+import fr.imacaron.groupe19.urgan.backend.steam.response.UserResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
@@ -23,5 +24,8 @@ interface SteamAPI {
 
     @GET("/actions/SearchApps/{name}")
     fun getAppsByName(@Path("name") name: String) : Deferred<List<AppSearchResponse>>
+
+    @GET("/ISteamUser/GetPlayerSummaries/v2")
+    fun getPlayerDetail(@Query("steamids") id: Long, @Query("key") key: String = "0016FA008ECF7498F1756C662B614525", @Query("format") format: String = "json"): Deferred<UserResponse>
 
 }

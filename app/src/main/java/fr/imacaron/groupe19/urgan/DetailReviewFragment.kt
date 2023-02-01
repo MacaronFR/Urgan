@@ -12,7 +12,7 @@ import fr.imacaron.groupe19.urgan.list.ReviewAdapter
 class DetailReviewFragment: Fragment() {
     private lateinit var binding: FragmentDetailReviewBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         println("Coucou")
         binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
         val reviews = arguments?.getParcelableArrayList<Review>("review")
