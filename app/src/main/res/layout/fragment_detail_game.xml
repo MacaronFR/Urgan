@@ -147,10 +147,13 @@
         <Button
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/middle2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_first_group_left"
                 android:text="Description"
                 android:id="@+id/toDesc"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
         />
         <androidx.constraintlayout.widget.Guideline
                 android:layout_width="wrap_content"
@@ -163,9 +166,12 @@
                 android:id="@+id/toReviews"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/middle2"
-                android:layout_width="wrap_content"
+                android:background="@drawable/button_second_group_right"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Avis"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
         />
         <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/descReviews"

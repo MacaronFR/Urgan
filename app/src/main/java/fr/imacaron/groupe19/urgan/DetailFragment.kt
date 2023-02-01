@@ -24,8 +24,6 @@ class DetailFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        println("Created")
         setFragmentResultListener("gameData"){ _, bundle ->
             println("CIC")
             game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
@@ -52,10 +50,14 @@ class DetailFragment: Fragment() {
         }
 
         binding.toDesc.setOnClickListener {
+            binding.toDesc.setBackgroundResource(R.drawable.button_first_group_left)
+            binding.toReviews.setBackgroundResource(R.drawable.button_second_group_right)
             binding.descReviews.findNavController().navigate(R.id.DetailDescFragment, bundleOf("game" to game))
         }
 
         binding.toReviews.setOnClickListener {
+            binding.toDesc.setBackgroundResource(R.drawable.button_second_group_left)
+            binding.toReviews.setBackgroundResource(R.drawable.button_first_group_right)
             binding.descReviews.findNavController().navigate(R.id.DetailReviewFragment, bundleOf("review" to game.reviews))
         }
     }
