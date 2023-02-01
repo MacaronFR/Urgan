@@ -1,4 +1,4 @@
-package fr.imacaron.groupe19.urgan
+package fr.imacaron.groupe19.urgan.home.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

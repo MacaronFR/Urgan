@@ -1,4 +1,4 @@
-package fr.imacaron.groupe19.urgan
+package fr.imacaron.groupe19.urgan.home.detail
 
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.databinding.FragmentDetailGameBinding
@@ -39,6 +40,10 @@ class DetailFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailGameBinding.inflate(inflater, container, false)
+
+        updateWish()
+        updateLike()
+
         return binding.root
     }
 
@@ -76,15 +81,7 @@ class DetailFragment: Fragment() {
                     FirebaseAPIManager.setUser((activity as HomeActivity).user)
 
                     withContext(Dispatchers.Main) {
-                        Log.e("MAIS OU", "TEST")
-                        // Changer l'affichage du logo
-                        if (isLiked) {
-                            println("LIKE")
-                            binding.like.setImageResource(R.drawable.like_full)
-                        }
-                        else {
-                            binding.like.setBackgroundColor(R.drawable.like)
-                        }
+                        updateLike()
                     }
                 }
             }
@@ -104,13 +101,7 @@ class DetailFragment: Fragment() {
                     FirebaseAPIManager.setUser((activity as HomeActivity).user)
 
                     withContext(Dispatchers.Main) {
-                        // Changer l'affichage du logo
-                        if (isWished) {
-                            binding.wishlist.setImageResource(R.drawable.whishlist_full)
-                        }
-                        else {
-                            binding.wishlist.setImageResource(R.drawable.whishlist)
-                        }
+                        updateWish()
                     }
                 }
             }
@@ -147,6 +138,24 @@ class DetailFragment: Fragment() {
         }
         if(game.wish){
             binding.wishlist.setImageResource(R.drawable.whishlist_full)
+        }
+    }
+
+    private fun updateWish() {
+        if ((activity as HomeActivity).user.wishList?.contains(game.id.toLong()) == true) {
+            binding.wishlist.setImageResource(R.drawable.whishlist_full)
+        }
+        else {
+            binding.wishlist.setImageResource(R.drawable.whishlist)
+        }
+    }
+
+    private fun updateLike() {
+        if ((activity as HomeActivity).user.likeList?.contains(game.id.toLong()) == true) {
+            binding.like.setImageResource(R.drawable.like_full)
+        }
+        else {
+            binding.like.setImageResource(R.drawable.like)
         }
     }
 }

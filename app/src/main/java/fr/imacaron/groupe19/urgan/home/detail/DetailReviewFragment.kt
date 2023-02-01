@@ -1,4 +1,4 @@
-package fr.imacaron.groupe19.urgan
+package fr.imacaron.groupe19.urgan.home.detail
 
 import android.os.Build
 import android.os.Bundle

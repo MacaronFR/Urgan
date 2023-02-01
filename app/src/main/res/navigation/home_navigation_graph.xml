@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/DetailFragment"
-        android:name="fr.imacaron.groupe19.urgan.DetailFragment"
+        android:name="fr.imacaron.groupe19.urgan.home.detail.DetailFragment"
         android:label="Detail"
         tools:layout="@layout/fragment_detail_game"
     >

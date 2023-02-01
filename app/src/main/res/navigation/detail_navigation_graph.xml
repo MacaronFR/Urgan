@@ -7,14 +7,14 @@
 >
     <fragment
             android:id="@+id/DetailDescFragment"
-            android:name="fr.imacaron.groupe19.urgan.DetailDescFragment"
+            android:name="fr.imacaron.groupe19.urgan.home.detail.DetailDescFragment"
             android:label="DetailDesc"
             tools:layout="@layout/fragment_detail_desc"
     />
 
     <fragment
             android:id="@+id/DetailReviewFragment"
-            android:name="fr.imacaron.groupe19.urgan.DetailReviewFragment"
+            android:name="fr.imacaron.groupe19.urgan.home.detail.DetailReviewFragment"
             android:label="DetailReview"
             tools:layout="@layout/fragment_detail_review"
     />
