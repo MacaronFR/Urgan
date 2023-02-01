@@ -1,5 +1,6 @@
 package fr.imacaron.groupe19.urgan.home.detail
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,14 @@ class DetailDescFragment: Fragment() {
     var desc: TextView? = null
         private set
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailDescBinding.inflate(inflater, container, false)
-        val game = arguments?.getParcelable<Game>("game")
+        val game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
+            arguments?.getParcelable("game", Game::class.java)
+        }else {
+            println("old")
+            arguments?.getParcelable("game")
+        }
         binding.desc.text = game?.description
         desc = binding.desc
         return binding.root
