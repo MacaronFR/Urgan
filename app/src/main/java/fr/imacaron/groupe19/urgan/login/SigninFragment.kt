@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentSigninBinding
@@ -32,6 +33,14 @@ class SigninFragment: Fragment() {
 
         binding.doSignin.setOnClickListener {
             registerUser(view)
+        }
+
+        binding.goLogin.setOnClickListener {
+            findNavController().navigate(R.id.LoginFragment)
+        }
+
+        binding.forgot.setOnClickListener {
+            findNavController().navigate(R.id.ForgotFragment)
         }
     }
 
