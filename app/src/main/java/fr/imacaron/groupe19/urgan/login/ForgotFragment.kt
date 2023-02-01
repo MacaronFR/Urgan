@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.databinding.FragmentForgotBinding
 
 class ForgotFragment: Fragment(){
@@ -18,6 +20,17 @@ class ForgotFragment: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        println("Forgot")
+        binding.goLogin.setOnClickListener {
+            findNavController().navigate(R.id.LoginFragment)
+        }
+
+        binding.goSignin.setOnClickListener {
+            findNavController().navigate(R.id.SigninFragment)
+        }
+
+        binding.resend.setOnClickListener {
+            println("Forgot")
+        }
+
     }
 }
