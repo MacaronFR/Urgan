@@ -3,6 +3,8 @@ package fr.imacaron.groupe19.urgan.home
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.data.User
 import fr.imacaron.groupe19.urgan.databinding.ActivityHomeBinding
@@ -27,17 +29,21 @@ class HomeActivity: AppCompatActivity() {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBackPressed(){
-        if(confirm){
-            FirebaseAPIManager.signOut()
-            Toast.makeText(this, "Log Out Successful", Toast.LENGTH_LONG).show()
-            this.finish()
-        }else{
-            Toast.makeText(this, "Appuyer à nouveau pour vous déconnecter", Toast.LENGTH_SHORT).show()
-            confirm = true
-            GlobalScope.launch {
-                delay(5000)
-                confirm = false
+        if(supportFragmentManager.findFragmentById(R.id.home_fragment_content)!!.childFragmentManager.fragments[0] is HomeFragment){
+            if(confirm){
+                FirebaseAPIManager.signOut()
+                Toast.makeText(this, "Log Out Successful", Toast.LENGTH_LONG).show()
+                this.finish()
+            }else{
+                Toast.makeText(this, "Appuyer à nouveau pour vous déconnecter", Toast.LENGTH_SHORT).show()
+                confirm = true
+                GlobalScope.launch {
+                    delay(5000)
+                    confirm = false
+                }
             }
+        }else{
+            findNavController(R.id.home_fragment_content).navigateUp()
         }
     }
 
