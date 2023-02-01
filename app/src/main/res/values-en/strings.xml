@@ -15,4 +15,15 @@
     <string name="username">Username</string>
     <string name="check_password">Password check</string>
     <string name="do_signin">Sign in</string>
+    <string name="close">Close</string>
+    <string name="whishlist">Whish List</string>
+    <string name="likes">Games liked</string>
+    <string name="game_logo">Game logo</string>
+    <string name="desc">Description</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_like"><![CDATA[You have not like game<br/>Click on the heart to add</string]]></string>
+    <string name="no_wish"><![CDATA[You have not wish games.\\nClick on the star to add]]></string>
+    <string name="search">Search game …</string>
+    <string name="game_background">Game Background</string>
+    <string name="more">More information</string>
 </resources>

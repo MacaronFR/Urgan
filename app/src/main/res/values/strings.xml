@@ -16,6 +16,17 @@
     <string name="username">Nom d\'utilisateur</string>
     <string name="check_password">Vérification du mot de passe</string>
     <string name="do_signin">S\'inscrire</string>
+    <string name="close">Fermer</string>
+    <string name="whishlist">Whish List</string>
+    <string name="likes">Jeux Likés</string>
+    <string name="game_logo">Logo du jeu</string>
+    <string name="desc">Description</string>
+    <string name="reviews">Avis</string>
+    <string name="no_like"><![CDATA[Vous n\'avez pas encore liké de contenu.<br/>Cliquez sur le cœur pour en rajouter]]></string>
+    <string name="no_wish"><![CDATA[Vous n\'avez pas encore souhaité de contenu.\\nCliquez sur l\'étoile pour en rajouter]]></string>
+    <string name="search">Rechercher un jeu …</string>
+    <string name="game_background">Background du jeu</string>
+    <string name="more">En savoir plus</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

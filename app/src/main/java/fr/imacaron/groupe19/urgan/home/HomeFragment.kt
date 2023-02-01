@@ -19,6 +19,7 @@ import kotlinx.coroutines.*
 class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
@@ -44,6 +45,7 @@ class HomeFragment: Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,11 +54,19 @@ class HomeFragment: Fragment() {
         }
 
         binding.wishlist.setOnClickListener {
-            findNavController().navigate(R.id.WishlistFragment)
+            if((activity as HomeActivity).user.wishList?.size == 0){
+                findNavController().navigate(R.id.WishlistEmptyFragment)
+            }else{
+                findNavController().navigate(R.id.WishlistFragment)
+            }
         }
 
         binding.like.setOnClickListener {
-            findNavController().navigate(R.id.LikesFragment)
+            if((activity as HomeActivity).user.likeList?.size == 0){
+                findNavController().navigate(R.id.LikesEmptyFragment)
+            }else{
+                findNavController().navigate(R.id.LikesFragment)
+            }
         }
 
         GlobalScope.launch {

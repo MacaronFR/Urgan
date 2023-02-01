@@ -51,7 +51,6 @@ object SteamAPIManager {
     suspend fun getGameDetails(id : Long): GameDetailsResponse {
         val response = store.getGameDetailsById(id).await()
         val game_details = response.asJsonObject.getAsJsonObject(id.toString())
-        println(game_details.toString())
         return GsonBuilder().create().fromJson(game_details, GameDetailsResponse::class.java)
     }
 
