@@ -49,12 +49,12 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(dataSet[position]){
+        dataSet[position].let { gameId ->
             var game: Game
             apiRequest[holder.layoutPosition] = GlobalScope.launch {
                 withContext(Dispatchers.IO + h) {
-                    val game_details = SteamAPIManager.getGameDetails(this@with)
-                    val game_reviews_response = SteamAPIManager.getGameReviews(this@with)
+                    val game_details = SteamAPIManager.getGameDetails(gameId)
+                    val game_reviews_response = SteamAPIManager.getGameReviews(gameId)
                     val game_reviews = game_reviews_response.reviews.map {
                         Review(
                             it.author?.steamid.toString(),
