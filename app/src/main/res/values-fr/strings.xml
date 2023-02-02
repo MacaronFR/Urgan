@@ -24,7 +24,7 @@
     <string name="desc">Description</string>
     <string name="reviews">Avis</string>
     <string name="no_like"><![CDATA[Vous n\'avez pas encore liké de contenu.<br/>Cliquez sur le cœur pour en rajouter]]></string>
-    <string name="no_wish"><![CDATA[Vous n\'avez pas encore souhaité de contenu.\\nCliquez sur l\'étoile pour en rajouter]]></string>
+    <string name="no_wish"><![CDATA[Vous n\'avez pas encore souhaité de contenu.<br/>Cliquez sur l\'étoile pour en rajouter]]></string>
     <string name="search">Rechercher un jeu …</string>
     <string name="game_background">Background du jeu</string>
     <string name="more">En savoir plus</string>
