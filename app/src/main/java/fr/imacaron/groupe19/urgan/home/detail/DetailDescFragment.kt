@@ -20,7 +20,7 @@ class DetailDescFragment: Fragment() {
         val game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
             arguments?.getParcelable("game", Game::class.java)
         }else {
-            println("old")
+            @Suppress("DEPRECATION")
             arguments?.getParcelable("game")
         }
         binding.desc.text = game?.description

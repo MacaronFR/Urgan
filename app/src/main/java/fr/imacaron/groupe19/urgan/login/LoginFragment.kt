@@ -52,7 +52,7 @@ class LoginFragment: Fragment() {
                     try{
                         FirebaseAPIManager.loginUser(email, password)
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginFragment.context, resources.getString(R.string.login), Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
                         }
                     }catch (e: FirebaseNetworkException){

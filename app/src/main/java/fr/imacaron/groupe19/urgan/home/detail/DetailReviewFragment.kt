@@ -18,7 +18,7 @@ class DetailReviewFragment: Fragment() {
         val reviews = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
             arguments?.getParcelableArrayList("review", Review::class.java) ?: listOf()
         }else {
-            println("old")
+            @Suppress("DEPRECATION")
             arguments?.getParcelableArrayList("review") ?: listOf()
         }
         println(reviews.size)
