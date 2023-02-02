@@ -5,6 +5,14 @@
         android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
 >
+
+    <include layout="@layout/spinner_loading_item"
+        android:id="@+id/spinner_loading"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/bar"
             android:layout_width="0dp"

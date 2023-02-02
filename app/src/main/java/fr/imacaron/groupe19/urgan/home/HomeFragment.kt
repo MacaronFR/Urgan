@@ -25,6 +25,9 @@ class HomeFragment: Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
+        binding.spinnerLoading.root.visibility = View.VISIBLE
+        binding.spinnerLoading.root.bringToFront()
+
         val adapter = GameAdapter(listOf(), this)
         binding.list.adapter = adapter
 
@@ -84,6 +87,7 @@ class HomeFragment: Fragment() {
                 withContext(Dispatchers.Main) {
                     val adapter = GameAdapter(gamesDetailsIds, this@HomeFragment)
                     binding.list.adapter = adapter
+                    binding.spinnerLoading.root.visibility = View.GONE
                 }
                 0
             }
@@ -91,6 +95,7 @@ class HomeFragment: Fragment() {
                 when(res){
                     1 -> Toast.makeText(context, resources.getString(R.string.no_connection), Toast.LENGTH_LONG).show()
                 }
+                binding.spinnerLoading.root.visibility = View.GONE
             }
         }
 

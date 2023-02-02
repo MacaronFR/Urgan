@@ -46,23 +46,35 @@ class LoginFragment: Fragment() {
         val email = binding.email.text.toString()
         val password = binding.password.text.toString()
 
+        binding.spinnerLoading.root.visibility = View.VISIBLE
+        binding.spinnerLoading.root.bringToFront()
+
         GlobalScope.launch {
             withContext(Dispatchers.IO + h) {
                 if(email.isNotEmpty() && password.isNotEmpty()){
                     try{
-                        FirebaseAPIManager.loginUser(email, password)
+                        val isConnected = FirebaseAPIManager.loginUser(email, password)
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(this@LoginFragment.context, resources.getString(R.string.login), Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
+                            if (isConnected) {
+                                Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
+                                binding.spinnerLoading.root.visibility = View.GONE
+                                startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
+                            } else {
+                                Toast.makeText(this@LoginFragment.context, "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
+                            }
+
                         }
                     }catch (e: FirebaseNetworkException){
                         withContext(Dispatchers.Main){
-                            Toast.makeText(this@LoginFragment.context, resources.getString(R.string.no_connection), Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@LoginFragment.context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
                         }
                     }catch (e: FirebaseAuthInvalidCredentialsException) {
                         withContext(Dispatchers.Main){
-                            Toast.makeText(this@LoginFragment.context, resources.getString(R.string.bad_credentials), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginFragment.context, "Les informations renseigné sont incorrecte", Toast.LENGTH_SHORT).show()
                         }
+                    }
+                    withContext(Dispatchers.Main){
+                        binding.spinnerLoading.root.visibility = View.GONE
                     }
                 }
             }

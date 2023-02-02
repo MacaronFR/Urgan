@@ -34,6 +34,10 @@ class SigninFragment: Fragment() {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun registerUser(view: View) {
+
+        binding.spinnerLoading.root.visibility = View.VISIBLE
+        binding.spinnerLoading.root.bringToFront()
+
         val username: String = view.findViewById<EditText>(R.id.username).text.toString()
         val email: String = view.findViewById<EditText>(R.id.email).text.toString()
         val password: String = view.findViewById<EditText>(R.id.password).text.toString()
@@ -49,6 +53,7 @@ class SigninFragment: Fragment() {
                 val isConnected = FirebaseAPIManager.signinUser(username, email, password)
 
                 withContext(Dispatchers.Main) {
+                    binding.spinnerLoading.root.visibility = View.GONE
                     if (isConnected) {
                         // Sign in success, update UI with the signed-in user's information
                         Toast.makeText(this@SigninFragment.context, resources.getString(R.string.registration_ok), Toast.LENGTH_SHORT).show()
