@@ -12,7 +12,7 @@ import fr.imacaron.groupe19.urgan.databinding.FragmentDetailDescBinding
 
 class DetailDescFragment: Fragment() {
     private lateinit var binding: FragmentDetailDescBinding
-    var desc: TextView? = null
+    private var desc: TextView? = null
         private set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

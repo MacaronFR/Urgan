@@ -2,7 +2,6 @@ package fr.imacaron.groupe19.urgan.data
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.io.Serializable
 
 data class Game(
     val title: String,
@@ -29,8 +28,7 @@ data class Game(
         parcel.readByte() != 0.toByte(),
         parcel.createTypedArrayList(Review.CREATOR)!!,
         parcel.readInt()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)

@@ -55,13 +55,13 @@ class SearchFragment: Fragment() {
                             }
                             return@withContext
                         }
-                        val app_ids = res.map {
+                        val appIds = res.map {
                             it.appid?.toLong() ?: 0
                         }
                         withContext(Dispatchers.Main) {
-                            val adapter = GameAdapter(app_ids, this@SearchFragment)
+                            val adapter = GameAdapter(appIds, this@SearchFragment)
                             binding.list.adapter = adapter
-                            binding.nbRes.text = resources.getString(R.string.nb_result, app_ids.size)
+                            binding.nbRes.text = resources.getString(R.string.nb_result, appIds.size)
                         }
                     }
                 }

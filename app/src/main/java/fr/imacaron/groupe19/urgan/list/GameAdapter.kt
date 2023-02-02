@@ -55,7 +55,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
             var game: Game
             apiRequest[holder.layoutPosition] = GlobalScope.launch {
                 withContext(Dispatchers.IO + h) {
-                    val game_details = try {
+                    val gameDetails = try {
                         SteamAPIManager.getGameDetails(gameId)
                     }catch (e: NetworkException){
                         withContext(Dispatchers.Main) {
@@ -66,7 +66,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                         e.printStackTrace()
                         return@withContext
                     }
-                    val game_reviews_response = try {
+                    val gameReviewsResponse = try {
                         SteamAPIManager.getGameReviews(gameId)
                     }catch (e: NetworkException){
                         withContext(Dispatchers.Main){
@@ -76,8 +76,8 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     }catch (e: Exception){
                         return@withContext
                     }
-                    val game_reviews = try {
-                        game_reviews_response.reviews.map {
+                    val gameReviews = try {
+                        gameReviewsResponse.reviews.map {
                             Review(
                                 it.author?.steamid.toString(),
                                 it.votedUp ?: false,
@@ -93,17 +93,17 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                         return@withContext
                     }
                     game = Game(
-                        game_details.data?.name ?: "",
-                        game_details.data?.publishers?.getOrNull(0) ?: "",
-                        if (game_details.data?.isFree == true) "free" else (game_details.data?.priceOverview?.finalFormatted ?: "-€"),
-                        game_details.data?.headerImage ?: "",
-                        game_details.data?.background ?: "",
-                        game_details.data?.shortDescription ?: "",
-                        game_details.data?.headerImage ?: "",
+                        gameDetails.data?.name ?: "",
+                        gameDetails.data?.publishers?.getOrNull(0) ?: "",
+                        if (gameDetails.data?.isFree == true) "free" else (gameDetails.data?.priceOverview?.finalFormatted ?: "-€"),
+                        gameDetails.data?.headerImage ?: "",
+                        gameDetails.data?.background ?: "",
+                        gameDetails.data?.shortDescription ?: "",
+                        gameDetails.data?.headerImage ?: "",
                         true,
                         true,
-                        game_reviews,
-                        game_details.data?.steamAppid ?: 0
+                        gameReviews,
+                        gameDetails.data?.steamAppid ?: 0
                     )
 
                     try{

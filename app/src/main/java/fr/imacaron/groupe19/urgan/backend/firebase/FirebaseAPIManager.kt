@@ -22,7 +22,7 @@ object FirebaseAPIManager {
     }
 
     suspend fun signinUser(pseudo: String, email: String, password: String): Boolean {
-        var isConnected = false;
+        var isConnected = false
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -33,8 +33,8 @@ object FirebaseAPIManager {
                         pseudo,
                         email,
                         password,
-                        arrayListOf<Long>(),
-                        arrayListOf<Long>()
+                        arrayListOf(),
+                        arrayListOf()
                     )
 
                     db.collection("Users")
@@ -48,7 +48,7 @@ object FirebaseAPIManager {
             }
             .await()
 
-        return isConnected;
+        return isConnected
     }
 
     suspend fun loginUser(email: String, password: String): Boolean {
@@ -72,8 +72,8 @@ object FirebaseAPIManager {
         return getUserByEmail(auth.currentUser?.email ?: "")
     }
 
-    suspend fun getUserByEmail(email: String): User? {
-        var documentSnapshot = db.collection("Users")
+    private suspend fun getUserByEmail(email: String): User? {
+        val documentSnapshot = db.collection("Users")
             .document(email)
             .get()
             .await()

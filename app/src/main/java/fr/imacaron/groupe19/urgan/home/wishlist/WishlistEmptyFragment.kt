@@ -11,7 +11,7 @@ import fr.imacaron.groupe19.urgan.databinding.FragmentEmptyWishlistBinding
 
 class WishlistEmptyFragment: Fragment() {
     private lateinit var binding: FragmentEmptyWishlistBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentEmptyWishlistBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         return binding.root

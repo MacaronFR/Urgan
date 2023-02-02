@@ -72,11 +72,6 @@ data class GameDetailsResponse(
             @SerializedName("final_formatted"   ) var finalFormatted   : String? = null
         )
 
-        data class PcRequirements (
-            @SerializedName("minimum"     ) var minimum     : String? = null,
-            @SerializedName("recommended" ) var recommended : String? = null
-        )
-
         data class Platforms (
             @SerializedName("windows" ) var windows : Boolean? = null,
             @SerializedName("mac"     ) var mac     : Boolean? = null,

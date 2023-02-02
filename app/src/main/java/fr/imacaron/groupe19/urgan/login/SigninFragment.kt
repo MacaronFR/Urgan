@@ -37,9 +37,9 @@ class SigninFragment: Fragment() {
         val username: String = view.findViewById<EditText>(R.id.username).text.toString()
         val email: String = view.findViewById<EditText>(R.id.email).text.toString()
         val password: String = view.findViewById<EditText>(R.id.password).text.toString()
-        val check_password: String = view.findViewById<EditText>(R.id.check_password).text.toString()
+        val checkPassword: String = view.findViewById<EditText>(R.id.check_password).text.toString()
 
-        if (password != check_password) {
+        if (password != checkPassword) {
             view.findViewById<EditText>(R.id.check_password).setText("")
         }
 

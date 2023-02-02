@@ -77,12 +77,12 @@ class HomeFragment: Fragment() {
                 }catch (e: NetworkException){
                     return@withContext 1
                 }
-                val games_details_ids = games.response.ranks.map {
+                val gamesDetailsIds = games.response.ranks.map {
                     it.app_id
                 }
 
                 withContext(Dispatchers.Main) {
-                    val adapter = GameAdapter(games_details_ids, this@HomeFragment)
+                    val adapter = GameAdapter(gamesDetailsIds, this@HomeFragment)
                     binding.list.adapter = adapter
                 }
                 0
@@ -96,7 +96,7 @@ class HomeFragment: Fragment() {
 
     }
 
-    fun updateWishCount() {
+    private fun updateWishCount() {
         val count = (activity as HomeActivity).user.wishList?.size
         if(count == null || count <= 0){
             binding.wishCount.visibility = View.INVISIBLE
@@ -106,7 +106,7 @@ class HomeFragment: Fragment() {
         }
     }
 
-    fun updateLikeCount() {
+    private fun updateLikeCount() {
         val count = (activity as HomeActivity).user.likeList?.size
         if(count == null || count <= 0){
             binding.likeCount.visibility = View.INVISIBLE

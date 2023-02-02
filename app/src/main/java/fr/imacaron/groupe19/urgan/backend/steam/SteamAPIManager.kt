@@ -51,8 +51,8 @@ object SteamAPIManager {
     suspend fun getGameDetails(id : Long): GameDetailsResponse {
         return try{
             val response = store.getGameDetailsById(id).await()
-            val game_details = response.asJsonObject.getAsJsonObject(id.toString())
-            GsonBuilder().create().fromJson(game_details, GameDetailsResponse::class.java)
+            val gameDetails = response.asJsonObject.getAsJsonObject(id.toString())
+            GsonBuilder().create().fromJson(gameDetails, GameDetailsResponse::class.java)
         }catch (e: Exception){
             when(e) {
                 is UnknownHostException -> {

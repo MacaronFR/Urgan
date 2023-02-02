@@ -15,8 +15,6 @@ import fr.imacaron.groupe19.urgan.list.GameAdapter
 class WishlistFragment: Fragment() {
     private lateinit var binding: FragmentWishlistBinding
 
-    private lateinit var wishGames: List<Game>
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentWishlistBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)

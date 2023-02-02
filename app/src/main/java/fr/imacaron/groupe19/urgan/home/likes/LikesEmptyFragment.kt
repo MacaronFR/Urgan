@@ -11,7 +11,7 @@ import fr.imacaron.groupe19.urgan.databinding.FragmentEmptyLikeBinding
 
 class LikesEmptyFragment: Fragment() {
     private lateinit var binding: FragmentEmptyLikeBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentEmptyLikeBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         return binding.root
