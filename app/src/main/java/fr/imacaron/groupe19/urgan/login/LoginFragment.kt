@@ -15,10 +15,7 @@ import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentLoginBinding
 import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.home.HomeActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class LoginFragment: Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -44,6 +41,7 @@ class LoginFragment: Fragment() {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun loginUser() {
         val email = binding.email.text.toString()
         val password = binding.password.text.toString()
@@ -52,24 +50,18 @@ class LoginFragment: Fragment() {
             withContext(Dispatchers.IO + h) {
                 if(email.isNotEmpty() && password.isNotEmpty()){
                     try{
-                        val isConnected = FirebaseAPIManager.loginUser(email, password)
+                        FirebaseAPIManager.loginUser(email, password)
                         withContext(Dispatchers.Main) {
-                            if (isConnected) {
-                                Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(this@LoginFragment.context, "Unable to login. Check your input or try again later", Toast.LENGTH_SHORT).show()
-                            }
-
+                            Toast.makeText(this@LoginFragment.context, "Login successful", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@LoginFragment.context, HomeActivity::class.java))
                         }
                     }catch (e: FirebaseNetworkException){
                         withContext(Dispatchers.Main){
-                            Toast.makeText(this@LoginFragment.context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@LoginFragment.context, resources.getString(R.string.no_connection), Toast.LENGTH_LONG).show()
                         }
                     }catch (e: FirebaseAuthInvalidCredentialsException) {
                         withContext(Dispatchers.Main){
-                            Toast.makeText(this@LoginFragment.context, "Les informations renseigné sont incorrecte", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginFragment.context, resources.getString(R.string.bad_credentials), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

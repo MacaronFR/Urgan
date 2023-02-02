@@ -59,7 +59,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                         SteamAPIManager.getGameDetails(gameId)
                     }catch (e: NetworkException){
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(fragment.context, fragment.resources.getString(R.string.no_connection), Toast.LENGTH_SHORT).show()
                         }
                         return@withContext
                     }catch (e: Exception){
@@ -70,7 +70,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                         SteamAPIManager.getGameReviews(gameId)
                     }catch (e: NetworkException){
                         withContext(Dispatchers.Main){
-                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(fragment.context, fragment.resources.getString(R.string.no_connection), Toast.LENGTH_SHORT).show()
                         }
                         return@withContext
                     }catch (e: Exception){
@@ -86,7 +86,7 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                         } as ArrayList
                     }catch (e: NetworkException){
                         withContext(Dispatchers.Main){
-                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT)
+                            Toast.makeText(fragment.context, fragment.resources.getString(R.string.no_connection), Toast.LENGTH_SHORT)
                         }
                         return@withContext
                     }catch (e: Exception){

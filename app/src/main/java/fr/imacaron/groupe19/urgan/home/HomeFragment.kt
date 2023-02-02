@@ -89,7 +89,7 @@ class HomeFragment: Fragment() {
             }
             withContext(Dispatchers.Main){
                 when(res){
-                    1 -> Toast.makeText(context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
+                    1 -> Toast.makeText(context, resources.getString(R.string.no_connection), Toast.LENGTH_LONG).show()
                 }
             }
         }

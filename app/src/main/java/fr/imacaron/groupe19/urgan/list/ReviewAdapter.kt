@@ -44,7 +44,7 @@ class ReviewAdapter(private val dataSet: List<Review>, private val fragment: Fra
                         SteamAPIManager.getPlayerDetails(this@review.player.toLong())
                     }catch (e: NetworkException){
                         withContext(Dispatchers.Main){
-                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT)
+                            Toast.makeText(fragment.context, fragment.resources.getString(R.string.no_connection), Toast.LENGTH_SHORT)
                         }
                         return@withContext
                     }

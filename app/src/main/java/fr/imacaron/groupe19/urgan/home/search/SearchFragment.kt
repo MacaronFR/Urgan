@@ -10,15 +10,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentSearchBinding
 import fr.imacaron.groupe19.urgan.error.NetworkException
 import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.list.GameAdapter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class SearchFragment: Fragment() {
     private lateinit var binding: FragmentSearchBinding
@@ -32,6 +30,7 @@ class SearchFragment: Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,7 +51,7 @@ class SearchFragment: Fragment() {
                             SteamAPIManager.getAppsByName(s.toString())
                         }catch (e: NetworkException){
                             withContext(Dispatchers.Main){
-                                Toast.makeText(context, "Pas de connexion internet", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, resources.getString(R.string.no_connection), Toast.LENGTH_SHORT).show()
                             }
                             return@withContext
                         }
@@ -62,7 +61,7 @@ class SearchFragment: Fragment() {
                         withContext(Dispatchers.Main) {
                             val adapter = GameAdapter(app_ids, this@SearchFragment)
                             binding.list.adapter = adapter
-                            binding.nbRes.text = "Nombre de résultat : ${app_ids.size}"
+                            binding.nbRes.text = resources.getString(R.string.nb_result, app_ids.size)
                         }
                     }
                 }

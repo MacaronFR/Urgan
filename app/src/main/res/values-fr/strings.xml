@@ -29,4 +29,12 @@
     <string name="game_background">Background du jeu</string>
     <string name="more">En savoir plus</string>
     <string name="price">Prix : %1$s</string>
+    <string name="no_connection">Pas de connexion internet</string>
+    <string name="disconnected">Déconnecté</string>
+    <string name="confirm_logout">Appuyer à nouveau pour vous déconnecter</string>
+    <string name="registration_ok">Inscription complété</string>
+    <string name="registration_error">Une erreur est survenue</string>
+    <string name="connected">Connecté</string>
+    <string name="bad_credentials">Les informations renseigné sont incorrecte</string>
+    <string name="nb_result">Nombre de résultat : $1%d</string>
 </resources>

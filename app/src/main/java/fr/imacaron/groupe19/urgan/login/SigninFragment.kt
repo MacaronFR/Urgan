@@ -8,16 +8,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentSigninBinding
 import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.home.HomeActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class SigninFragment: Fragment() {
     private lateinit var binding: FragmentSigninBinding
@@ -36,6 +32,7 @@ class SigninFragment: Fragment() {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun registerUser(view: View) {
         val username: String = view.findViewById<EditText>(R.id.username).text.toString()
         val email: String = view.findViewById<EditText>(R.id.email).text.toString()
@@ -54,13 +51,13 @@ class SigninFragment: Fragment() {
                 withContext(Dispatchers.Main) {
                     if (isConnected) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(this@SigninFragment.context, "Registration Successful", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SigninFragment.context, resources.getString(R.string.registration_ok), Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@SigninFragment.context, HomeActivity::class.java)
                         )
                     }
                     else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(this@SigninFragment.context, "An error occurred", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SigninFragment.context, resources.getString(R.string.registration_error), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
