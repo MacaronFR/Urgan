@@ -22,7 +22,7 @@ class DetailReviewFragment: Fragment() {
             arguments?.getParcelableArrayList("review") ?: listOf()
         }
         println(reviews.size)
-        binding.list.adapter = ReviewAdapter(reviews.toList())
+        binding.list.adapter = ReviewAdapter(reviews.toList(), this)
         return binding.root
     }
 }

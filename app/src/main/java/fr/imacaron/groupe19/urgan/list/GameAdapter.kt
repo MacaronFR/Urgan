@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -15,6 +16,7 @@ import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.data.Review
+import fr.imacaron.groupe19.urgan.error.NetworkException
 import fr.imacaron.groupe19.urgan.error.h
 import kotlinx.coroutines.*
 import java.net.MalformedURLException
@@ -53,15 +55,43 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
             var game: Game
             apiRequest[holder.layoutPosition] = GlobalScope.launch {
                 withContext(Dispatchers.IO + h) {
-                    val game_details = SteamAPIManager.getGameDetails(gameId)
-                    val game_reviews_response = SteamAPIManager.getGameReviews(gameId)
-                    val game_reviews = game_reviews_response.reviews.map {
-                        Review(
-                            it.author?.steamid.toString(),
-                            it.votedUp ?: false,
-                            it.review ?: "No review"
-                        )
-                    } as ArrayList
+                    val game_details = try {
+                        SteamAPIManager.getGameDetails(gameId)
+                    }catch (e: NetworkException){
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT).show()
+                        }
+                        return@withContext
+                    }catch (e: Exception){
+                        e.printStackTrace()
+                        return@withContext
+                    }
+                    val game_reviews_response = try {
+                        SteamAPIManager.getGameReviews(gameId)
+                    }catch (e: NetworkException){
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT).show()
+                        }
+                        return@withContext
+                    }catch (e: Exception){
+                        return@withContext
+                    }
+                    val game_reviews = try {
+                        game_reviews_response.reviews.map {
+                            Review(
+                                it.author?.steamid.toString(),
+                                it.votedUp ?: false,
+                                it.review ?: "No review"
+                            )
+                        } as ArrayList
+                    }catch (e: NetworkException){
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT)
+                        }
+                        return@withContext
+                    }catch (e: Exception){
+                        return@withContext
+                    }
                     game = Game(
                         game_details.data?.name ?: "",
                         game_details.data?.publishers?.getOrNull(0) ?: "",
@@ -95,15 +125,15 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                     }catch (e: MalformedURLException){
                         e.printStackTrace()
                     }
-                }
-                withContext(Dispatchers.Main) {
-                    holder.more.setOnClickListener{
-                        fragment.setFragmentResult("gameData", bundleOf("data" to game))
-                        fragment.findNavController().navigate(R.id.DetailFragment)
+                    withContext(Dispatchers.Main) {
+                        holder.more.setOnClickListener{
+                            fragment.setFragmentResult("gameData", bundleOf("data" to game))
+                            fragment.findNavController().navigate(R.id.DetailFragment)
+                        }
+                        holder.title.text = game.title
+                        holder.editor.text = game.editor
+                        holder.price.text = fragment.requireContext().resources.getString(R.string.price, game.price)
                     }
-                    holder.title.text = game.title
-                    holder.editor.text = game.editor
-                    holder.price.text = fragment.requireContext().resources.getString(R.string.price, game.price)
                 }
             }
         }

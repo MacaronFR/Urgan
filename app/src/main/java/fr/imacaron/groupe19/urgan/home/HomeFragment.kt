@@ -13,6 +13,7 @@ import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentHomeBinding
 import fr.imacaron.groupe19.urgan.error.NetworkException
+import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.list.GameAdapter
 import kotlinx.coroutines.*
 
@@ -28,7 +29,7 @@ class HomeFragment: Fragment() {
         binding.list.adapter = adapter
 
         GlobalScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO + h) {
                 val res = FirebaseAPIManager.getCurrentUser()
                 if (res != null) {
                     (activity as HomeActivity).user = res
@@ -39,9 +40,6 @@ class HomeFragment: Fragment() {
                 }
             }
         }
-
-
-
         return binding.root
     }
 
@@ -89,8 +87,10 @@ class HomeFragment: Fragment() {
                 }
                 0
             }
-            when(res){
-                1 -> Toast.makeText(context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
+            withContext(Dispatchers.Main){
+                when(res){
+                    1 -> Toast.makeText(context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
+                }
             }
         }
 

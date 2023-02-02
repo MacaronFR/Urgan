@@ -15,6 +15,7 @@ import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.data.Game
 import fr.imacaron.groupe19.urgan.databinding.FragmentDetailGameBinding
+import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.home.HomeActivity
 import kotlinx.coroutines.*
 import java.net.MalformedURLException
@@ -66,7 +67,7 @@ class DetailFragment: Fragment() {
 
         binding.like.setOnClickListener {
             GlobalScope.launch {
-                withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO + h) {
                     if ((activity as HomeActivity).user.likeList?.contains(game.id.toLong()) == false) {
                         (activity as HomeActivity).user.likeList?.add(game.id.toLong())
                     }
@@ -84,7 +85,7 @@ class DetailFragment: Fragment() {
 
         binding.wishlist.setOnClickListener {
             GlobalScope.launch {
-                withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO + h) {
                     if ((activity as HomeActivity).user.wishList?.contains(game.id.toLong()) == false) {
                         (activity as HomeActivity).user.wishList?.add(game.id.toLong())
                     }

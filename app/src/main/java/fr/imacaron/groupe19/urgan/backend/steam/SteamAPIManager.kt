@@ -6,8 +6,8 @@ import fr.imacaron.groupe19.urgan.backend.steam.response.*
 import fr.imacaron.groupe19.urgan.error.NetworkException
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
 import java.net.UnknownHostException
+import kotlin.Exception
 
 object SteamAPIManager {
 
@@ -49,12 +49,36 @@ object SteamAPIManager {
     }
 
     suspend fun getGameDetails(id : Long): GameDetailsResponse {
-        val response = store.getGameDetailsById(id).await()
-        val game_details = response.asJsonObject.getAsJsonObject(id.toString())
-        return GsonBuilder().create().fromJson(game_details, GameDetailsResponse::class.java)
+        return try{
+            val response = store.getGameDetailsById(id).await()
+            val game_details = response.asJsonObject.getAsJsonObject(id.toString())
+            GsonBuilder().create().fromJson(game_details, GameDetailsResponse::class.java)
+        }catch (e: Exception){
+            when(e) {
+                is UnknownHostException -> {
+                    throw NetworkException("Cannot resolve DNS")
+                }
+                else -> {
+                    e.printStackTrace()
+                    throw e
+                }
+            }
+        }
     }
 
-    suspend fun getGameReviews(id: Long): GameReviewResponse = store.getGameReviewsById(id).await()
+    suspend fun getGameReviews(id: Long): GameReviewResponse{
+        return try {
+            store.getGameReviewsById(id).await()
+        }catch (e: Exception){
+            when(e) {
+                is UnknownHostException -> throw NetworkException("Cannot resolve DNS")
+                else -> {
+                    e.printStackTrace()
+                    throw e
+                }
+            }
+        }
+    }
 
 
     suspend fun getAppsByName(name: String): List<AppSearchResponse> {

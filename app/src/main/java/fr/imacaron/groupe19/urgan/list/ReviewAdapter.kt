@@ -4,15 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.steam.SteamAPIManager
 import fr.imacaron.groupe19.urgan.data.Review
+import fr.imacaron.groupe19.urgan.error.NetworkException
 import fr.imacaron.groupe19.urgan.error.h
 import fr.imacaron.groupe19.urgan.views.UnderLineTextView
 import kotlinx.coroutines.*
 
-class ReviewAdapter(private val dataSet: List<Review>): RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
+class ReviewAdapter(private val dataSet: List<Review>, private val fragment: Fragment): RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val review: TextView
@@ -37,7 +40,14 @@ class ReviewAdapter(private val dataSet: List<Review>): RecyclerView.Adapter<Rev
             holder.review.text = this.review
             GlobalScope.launch {
                 withContext(Dispatchers.IO + h){
-                    val u = SteamAPIManager.getPlayerDetails(this@review.player.toLong())
+                    val u = try {
+                        SteamAPIManager.getPlayerDetails(this@review.player.toLong())
+                    }catch (e: NetworkException){
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(fragment.context, "Pas internet", Toast.LENGTH_SHORT)
+                        }
+                        return@withContext
+                    }
                     withContext(Dispatchers.Main){
                         holder.name.text = u.response.players[0].name
                     }
