@@ -45,11 +45,13 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
         return ViewHolder(view)
     }
 
+    private var apiRequest: MutableMap<Int, Job> = mutableMapOf()
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(dataSet[position]){
             var game: Game
-            GlobalScope.launch {
+            apiRequest[holder.layoutPosition] = GlobalScope.launch {
                 withContext(Dispatchers.IO + h) {
                     val game_details = SteamAPIManager.getGameDetails(this@with)
                     val game_reviews_response = SteamAPIManager.getGameReviews(this@with)
@@ -105,6 +107,11 @@ class GameAdapter(private val dataSet: List<Long>, val fragment: Fragment): Recy
                 }
             }
         }
+    }
+
+    override fun onViewRecycled(holder: ViewHolder) {
+        super.onViewRecycled(holder)
+        apiRequest[holder.layoutPosition]?.cancel()
     }
 
     override fun getItemCount(): Int = dataSet.size
