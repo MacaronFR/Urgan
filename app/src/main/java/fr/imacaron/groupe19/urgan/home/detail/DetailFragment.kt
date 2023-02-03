@@ -28,6 +28,7 @@ class DetailFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setFragmentResultListener("gameData"){ _, bundle ->
             game = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
                 bundle.getParcelable("data", Game::class.java)!!

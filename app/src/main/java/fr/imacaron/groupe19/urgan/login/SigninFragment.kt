@@ -2,12 +2,15 @@ package fr.imacaron.groupe19.urgan.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthException
 import fr.imacaron.groupe19.urgan.R
 import fr.imacaron.groupe19.urgan.backend.firebase.FirebaseAPIManager
 import fr.imacaron.groupe19.urgan.databinding.FragmentSigninBinding
@@ -43,26 +46,45 @@ class SigninFragment: Fragment() {
         val password: String = view.findViewById<EditText>(R.id.password).text.toString()
         val checkPassword: String = view.findViewById<EditText>(R.id.check_password).text.toString()
 
-        if (password != checkPassword) {
-            view.findViewById<EditText>(R.id.check_password).setText("")
-        }
-
-        GlobalScope.launch {
-            withContext(Dispatchers.IO + h) {
-
-                val isConnected = FirebaseAPIManager.signinUser(username, email, password)
-
-                withContext(Dispatchers.Main) {
-                    binding.spinnerLoading.root.visibility = View.GONE
-                    if (isConnected) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(this@SigninFragment.context, resources.getString(R.string.registration_ok), Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@SigninFragment.context, HomeActivity::class.java)
-                        )
+        if (password == checkPassword && username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && checkPassword.isNotEmpty()) {
+            GlobalScope.launch {
+                withContext(Dispatchers.IO + h) {
+                    try {
+                        val isConnected = FirebaseAPIManager.signinUser(username, email, password)
+                        withContext(Dispatchers.Main) {
+                            binding.spinnerLoading.root.visibility = View.GONE
+                            if (isConnected) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Toast.makeText(
+                                    this@SigninFragment.context,
+                                    resources.getString(R.string.registration_ok),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(
+                                    Intent(this@SigninFragment.context, HomeActivity::class.java)
+                                )
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(
+                                    this@SigninFragment.context,
+                                    resources.getString(R.string.registration_error),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                     }
-                    else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(this@SigninFragment.context, resources.getString(R.string.registration_error), Toast.LENGTH_SHORT).show()
+                    catch (e: FirebaseNetworkException) {
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(this@SigninFragment.context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    catch (e: FirebaseAuthException) {
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(this@SigninFragment.context, "Impossible de créer l'utilisateur", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    withContext(Dispatchers.Main){
+                        binding.spinnerLoading.root.visibility = View.GONE
                     }
                 }
             }
